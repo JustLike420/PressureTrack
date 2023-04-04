@@ -1,0 +1,30 @@
+version: '3.7'
+
+services:
+  db:
+    image: postgres
+    container_name: db_pressure
+    volumes:
+      - db_pressure_vol:/var/lib/postgresql/data
+    env_file:
+      - .env.dev
+    ports:
+      - "5432:5432"
+  web:
+    build: .
+    container_name: pressure
+    command: >
+      sh -c "poetry run python manage.py makemigrations --noinput && 
+      poetry run python manage.py migrate
+      && poetry run python manage.py runserver 0.0.0.0:8000
+      && poetry run python manage.py initadmin"
+    volumes:
+      - ./:/pressure
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    env_file:
+      - .env.dev
+volumes:
+  db_pressure_vol:
