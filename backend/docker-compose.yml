@@ -14,10 +14,9 @@ services:
     build: .
     container_name: pressure
     command: >
-      sh -c "poetry run python manage.py makemigrations --noinput && 
+      sh -c "poetry run python manage.py makemigrations && 
       poetry run python manage.py migrate
-      && poetry run python manage.py runserver 0.0.0.0:8000
-      && poetry run python manage.py initadmin"
+      && poetry run python manage.py runserver 0.0.0.0:8000"
     volumes:
       - ./:/pressure
     ports:
