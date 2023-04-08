@@ -1,10 +1,8 @@
 from django.contrib.auth.models import User
 from django.db import models
+from admins.models import BaseUser
 
 
-class Patient(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    age = models.IntegerField()
-
+class Patient(BaseUser):
     class Meta:
         db_table = 'patient'

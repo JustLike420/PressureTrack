@@ -1,18 +1,20 @@
 from django.contrib.auth.models import User
 from django.db import models
+from admins.models import BaseUser
 
 
-class Doctor(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    snils = models.CharField(max_length=14, unique=True)
-
+class Doctor(BaseUser):
     class Meta:
         db_table = 'doctor'
 
 
 class PatientDoctor(models.Model):
-    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, related_name='patient_doctor')
-    patient = models.ForeignKey(
+    doctor = models.OneToOneField(
+        Doctor,
+        on_delete=models.CASCADE,
+        related_name='patient_doctor'
+    )
+    patient = models.OneToOneField(
         'patients.Patient',
         on_delete=models.CASCADE,
         related_name='doctors_patient'
@@ -23,7 +25,7 @@ class PatientDoctor(models.Model):
 
 
 class Treatment(models.Model):
-    patient = models.ForeignKey(
+    patient = models.OneToOneField(
         'patients.Patient',
         on_delete=models.CASCADE,
         related_name='patient_treatment',
