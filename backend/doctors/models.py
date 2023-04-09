@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -9,6 +10,7 @@ class Doctor(models.Model):
         primary_key=True,
         unique=True
     )
+
 
     class Meta:
         db_table = 'doctor'
