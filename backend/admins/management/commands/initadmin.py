@@ -6,11 +6,10 @@ User = get_user_model()
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        if not User.objects.filter(username="admin"):
+        if not User.objects.filter(email="admin@mail.ru"):
             print("Creating admin account...")
             User.objects.create_superuser(
-                email="admin@example.com",
-                username="admin",
+                email="admin@mail.ru",
                 first_name="admin",
                 last_name="admin",
                 password="123",
