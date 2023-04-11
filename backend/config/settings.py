@@ -23,10 +23,12 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'drf_yasg',
+    'phonenumber_field',
     # Local apps
     'patients.apps.PatientsConfig',
     'doctors.apps.DoctorsConfig',
-    'admins.apps.AdminsConfig'
+    'admins.apps.AdminsConfig',
+    'accounts.apps.AccountsConfig',
 ]
 
 MIDDLEWARE = [
@@ -70,6 +72,9 @@ DATABASES = {
         'PORT': os.environ.get('DB_PORT', '5432'),
     }
 }
+
+AUTH_USER_MODEL = 'accounts.CustomUser'
+AUTHENTICATION_BACKENDS = ('accounts.backends.AuthBackend',)
 
 AUTH_PASSWORD_VALIDATORS = [
     {
