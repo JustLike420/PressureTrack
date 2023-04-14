@@ -11,7 +11,6 @@ class Doctor(models.Model):
         unique=True
     )
 
-
     class Meta:
         db_table = 'doctor'
 
