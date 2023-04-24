@@ -4,10 +4,12 @@ from doctors.models import Treatment
 
 
 class Patient(models.Model):
-    user = models.OneToOneField(
+    user = models.ForeignKey(
         'accounts.CustomUser',
         on_delete=models.CASCADE,
         related_name='patient',
+        primary_key=True,
+        unique=True
     )
     age = models.IntegerField()
     height = models.FloatField()
