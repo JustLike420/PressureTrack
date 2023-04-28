@@ -17,14 +17,11 @@ class TreatmentView(viewsets.ModelViewSet):
 
 class PatientDoctorStatusView(APIView):
     def put(self, request, pk):
-        try:
-            patient = Patient.objects.get(pk=pk)
-        except Patient.DoesNotExist:
+        if (patient := Patient.objects.filter(pk=pk)) is None:
             return Response(data={'model': 'patient'}, status=status.HTTP_404_NOT_FOUND)
-        try:
-            doctor = Doctor.objects.get(user=request.user)
-        except Doctor.DoesNotExist:
+        if (doctor := Doctor.objects.filter(user=request.user)) is None:
             return Response(data={'model': 'doctor'}, status=status.HTTP_404_NOT_FOUND)
+
         try:
             relation = PatientDoctor.objects.get(patient=patient, doctor=doctor)
             relation.status = False
