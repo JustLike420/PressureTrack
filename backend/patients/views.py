@@ -1,9 +1,12 @@
+from datetime import datetime, timedelta
+
+from django.db.models import Q
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets
+from rest_framework.views import APIView
+
 from patients.models import Measurement, Patient
-from patients.serializers import MeasurementSerializer, PatientSerializer
-from datetime import datetime, timedelta
-from django.db.models import Q
+from patients.serializers import MeasurementSerializer, PatientSerializer, DeviceSerializer
 
 
 class PatientView(viewsets.ModelViewSet):
@@ -15,6 +18,15 @@ class PatientView(viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = self.queryset.filter(user_id=self.kwargs['user_id'])
         return queryset
+
+
+class DeviceView(viewsets.ModelViewSet):
+    serializer_class = DeviceSerializer
+
+    def update(self, request, *args, **kwargs):
+        if patient := Patient.objects.filter(user=request.user):
+            patient.update(device=request.data['device'])
+        return {"success": True}
 
 
 class MeasurementView(viewsets.ModelViewSet):
