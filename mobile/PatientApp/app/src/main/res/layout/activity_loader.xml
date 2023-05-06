@@ -32,7 +32,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/logo" />
+                app:srcCompat="@drawable/logo_main" />
 
             <TextView
                 android:id="@+id/textView"
@@ -56,11 +56,7 @@
             style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/loader"
-            android:backgroundTint="#FFFFFF"
-            android:fillColor="@color/blue"
-            android:progressBackgroundTint="@color/blue"
-            android:progressTint="@color/blue"
+            android:indeterminateDrawable="@drawable/loader"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

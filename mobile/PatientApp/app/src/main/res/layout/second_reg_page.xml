@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegistrationActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout3"
+        android:layout_width="409dp"
+        android:layout_height="55dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:clickable="true"
+            android:onClick="GetBackOnClick1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="11dp"
+            android:layout_height="18.5dp"
+            android:clickable="true"
+            android:onClick="GetBackOnClick1"
+            app:layout_constraintBottom_toBottomOf="@+id/view"
+            app:layout_constraintEnd_toEndOf="@+id/view"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/vector__stroke_" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout4"
+        android:layout_width="409dp"
+        android:layout_height="170dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
+
+        <TextView
+            android:id="@+id/labelSecStep"
+            android:layout_width="262dp"
+            android:layout_height="58dp"
+            android:fontFamily="@font/inter"
+            android:gravity="center_horizontal|center_vertical"
+            android:letterSpacing="-0.02"
+            android:text="Пожалуйста, укажите ваш рост и вес"
+            android:textColor="#1D1D1D"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout5"
+        android:layout_width="409dp"
+        android:layout_height="176dp"
+        android:layout_marginTop="1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout4">
+
+        <EditText
+            android:id="@+id/heightInput"
+            android:layout_width="343dp"
+            android:layout_height="48dp"
+            android:background="@drawable/edittext_border"
+            android:clipToOutline="true"
+            android:digits="0123456789."
+            android:fillColor="#FBFCFF"
+            android:fontFamily="@font/inter"
+            android:gravity="center_vertical"
+            android:hint="Рост"
+            android:inputType="numberDecimal"
+            android:letterSpacing="0.01"
+            android:paddingHorizontal="14dp"
+            android:textColor="#000000"
+            android:textColorHint="#A0A3AD"
+            android:textSize="18dp"
+            app:hintEnabled="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/weightInput"
+            android:layout_width="343dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="64dp"
+            android:background="@drawable/edittext_border"
+            android:clipToOutline="true"
+            android:digits="0123456789."
+            android:fillColor="#FBFCFF"
+            android:fontFamily="@font/inter"
+            android:gravity="center_vertical"
+            android:hint="Вес"
+            android:inputType="numberDecimal"
+            android:letterSpacing="0.01"
+            android:paddingHorizontal="14dp"
+            android:textColor="#000000"
+            android:textColorHint="#A0A3AD"
+            android:textSize="18dp"
+            app:hintEnabled="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/heightInput" />
+
+        <Button
+            android:id="@+id/continueButton1"
+            android:layout_width="343dp"
+            android:layout_height="48dp"
+            android:background="@drawable/button_blue"
+            android:fontFamily="@font/inter"
+            android:onClick="goToNextPage2Button"
+            android:text="Вперед"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="409dp"
+        android:layout_height="224dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout5"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/img_notebook" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

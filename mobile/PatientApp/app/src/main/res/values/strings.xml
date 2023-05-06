@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">PressureTrack for Patients</string>
+    <string name="app_name">Моё давление</string>
+    <string name="tonometre_desc">Точная модель устройства позволит вашему лечащему врачу точнее интерпретировать результаты</string>
 </resources>
