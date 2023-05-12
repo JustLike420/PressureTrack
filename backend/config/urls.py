@@ -6,5 +6,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include('doctors.urls')),
     path('api/v1/', include('patients.urls')),
+    path('api/v1/', include('accounts.urls')),
 ]
 urlpatterns += doc_urls
