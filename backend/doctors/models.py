@@ -16,8 +16,8 @@ class Doctor(models.Model):
 
 
 class PatientDoctor(models.Model):
-    doctor = models.OneToOneField(Doctor, on_delete=models.CASCADE, related_name='patient_doctor')
-    patient = models.OneToOneField(
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, related_name='patient_doctor')
+    patient = models.ForeignKey(
         'patients.Patient',
         on_delete=models.CASCADE,
         related_name='doctors_patient'
