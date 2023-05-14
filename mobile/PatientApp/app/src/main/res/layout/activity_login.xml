@@ -91,7 +91,6 @@
                 android:layout_width="343dp"
                 android:layout_height="48dp"
                 android:background="@drawable/edittext_border"
-                android:fillColor="#FBFCFF"
                 android:fontFamily="@font/inter"
                 android:gravity="center_vertical"
                 android:hint="Пароль"
@@ -112,7 +111,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:onClick="registerOnButtonClick"
                 android:id="@+id/regButton"
                 android:layout_width="343dp"
@@ -129,13 +128,12 @@
                 app:layout_constraintHorizontal_bias="0.497"
                 app:layout_constraintStart_toStartOf="parent" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:onClick="loginOnButtonClick"
                 android:id="@+id/loginButton"
                 android:layout_width="343dp"
                 android:layout_height="48dp"
                 android:background="@drawable/button_blue"
-                android:backgroundTint="@color/blue"
                 android:fontFamily="@font/inter"
                 android:letterSpacing="0.01"
                 android:text="Войти"
