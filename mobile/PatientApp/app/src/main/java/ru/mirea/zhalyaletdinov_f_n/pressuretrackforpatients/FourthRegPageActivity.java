@@ -50,12 +50,16 @@ public class FourthRegPageActivity extends AppCompatActivity {
                     builder.setTitle("Заполните СНИЛС врача");
                     AlertDialog dialog = builder.create();
                     dialog.show();
+                } else if (snilsInput.getText().toString().replaceAll("[^0-9]", "").length() != 11) {
+                    builder.setTitle("Введен неправильный СНИЛС");
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
                 } else {
-                    String snils = snilsInput.getText().toString();
+                    String snils = snilsInput.getText().toString().replaceAll("[^0-9]", "");
                     System.out.printf("%s\n%s\n%s\n%s\n%.2f\n%.2f\n%s\n%s\n",
                             name, surname, email, password, height, weight, model, snils);
+                    // API - функционал
                 }
-                // API - функционал
             }
         });
 

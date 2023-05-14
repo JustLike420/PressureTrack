@@ -47,9 +47,9 @@ public class RegistrationActivity extends AppCompatActivity {
                     dialog.show();
                 }
                 else {
-                    String[] fio = fioTV.getText().toString().split(" ");
+                    String[] fio = fioTV.getText().toString().trim().split(" ");
 
-                    if (!isValidFIO(fioTV.getText().toString())) {
+                    if (!isValidFIO(fioTV.getText().toString().trim())) {
                         builder.setTitle("Вы неправильно заполнили имя и фамилию");
                         AlertDialog dialog = builder.create();
                         dialog.show();
