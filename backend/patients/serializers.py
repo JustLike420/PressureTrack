@@ -14,10 +14,4 @@ class PatientSerializer(serializers.ModelSerializer):
 class MeasurementSerializer(serializers.ModelSerializer):
     class Meta:
         model = Measurement
-        fields = "__all__"
-
-
-class DeviceSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Patient
-        fields = ("device", )
+        exclude = ('patient',)
