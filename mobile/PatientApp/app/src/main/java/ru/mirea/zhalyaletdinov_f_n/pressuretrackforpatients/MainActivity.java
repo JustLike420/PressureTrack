@@ -7,9 +7,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.github.mikephil.charting.charts.BarChart;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button logoutButton;
+    private BarChart chart;
     private Button addRecordButton;
 
     @Override
