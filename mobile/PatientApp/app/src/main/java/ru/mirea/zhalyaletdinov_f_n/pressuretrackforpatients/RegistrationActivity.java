@@ -3,7 +3,6 @@ package ru.mirea.zhalyaletdinov_f_n.pressuretrackforpatients;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import ru.mirea.zhalyaletdinov_f_n.pressuretrackforpatients.databinding.ActivityLoginBinding;
 import ru.mirea.zhalyaletdinov_f_n.pressuretrackforpatients.databinding.ActivityRegistrationBinding;
 
 import android.content.DialogInterface;
@@ -34,52 +33,46 @@ public class RegistrationActivity extends AppCompatActivity {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(RegistrationActivity.this, R.style.MyAlertDialog);
 
-        builder.setPositiveButton("ОК", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) { }
-        });
+        builder.setPositiveButton("ОК", (dialog, which) -> { });
 
         fioTV = binding.fioInput;
         emailTV = binding.emailInput;
         passwordTV = binding.passwordRegInput;
 
         regWButton = binding.regWButton;
-        regWButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        regWButton.setOnClickListener(view -> {
 
-                if (fioTV.getText().toString().isEmpty() || emailTV.getText().toString().isEmpty() ||
-                        passwordTV.getText().toString().isEmpty()) {
-                    builder.setTitle("Заполните все поля");
+            if (fioTV.getText().toString().isEmpty() || emailTV.getText().toString().isEmpty() ||
+                    passwordTV.getText().toString().isEmpty()) {
+                builder.setTitle("Заполните все поля");
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+            else {
+                String[] fio = fioTV.getText().toString().trim().split(" ");
+
+                if (!isValidFIO(fioTV.getText().toString().trim())) {
+                    builder.setTitle("Вы неправильно заполнили имя и фамилию");
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
+                else if (!isValidEmail(emailTV.getText().toString()) && !isValidPhoneNumber(emailTV.getText().toString())) {
+                    builder.setTitle("Неверный номер телефона или email");
                     AlertDialog dialog = builder.create();
                     dialog.show();
                 }
                 else {
-                    String[] fio = fioTV.getText().toString().trim().split(" ");
-
-                    if (!isValidFIO(fioTV.getText().toString().trim())) {
-                        builder.setTitle("Вы неправильно заполнили имя и фамилию");
-                        AlertDialog dialog = builder.create();
-                        dialog.show();
-                    }
-                    else if (!isValidEmail(emailTV.getText().toString()) && !isValidPhoneNumber(emailTV.getText().toString())) {
-                        builder.setTitle("Неверный номер телефона или email");
-                        AlertDialog dialog = builder.create();
-                        dialog.show();
-                    }
-                    else {
-                        Intent intentReg = new Intent(RegistrationActivity.this, SecRegPageActivity.class);
+                    Intent intentReg = new Intent(RegistrationActivity.this, SecRegPageActivity.class);
 //                        ArrayList<String> firstPage = new ArrayList<String>();
 //                        firstPage.add(fio[0]);
 //                        firstPage.add(fio[1]);
 //                        firstPage.add(emailTV.getText().toString());
 //                        firstPage.add(passwordTV.getText().toString());
-                        intentReg.putExtra("Name", fio[0]);
-                        intentReg.putExtra("Surname", fio[1]);
-                        intentReg.putExtra("Email", emailTV.getText().toString());
-                        intentReg.putExtra("Password", passwordTV.getText().toString());
-                        startActivity(intentReg);
-                    }
+                    intentReg.putExtra("Name", fio[0]);
+                    intentReg.putExtra("Surname", fio[1]);
+                    intentReg.putExtra("Email", emailTV.getText().toString());
+                    intentReg.putExtra("Password", passwordTV.getText().toString());
+                    startActivity(intentReg);
                 }
             }
         });

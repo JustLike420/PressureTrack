@@ -6,25 +6,29 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+
+import ru.mirea.zhalyaletdinov_f_n.pressuretrackforpatients.databinding.ThirdRegPageBinding;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class ThirdRegPageActivity extends AppCompatActivity {
 
-    private Button continueButton2;
+    private ThirdRegPageBinding binding;
+    private Button continueButton;
     private EditText modelET;
+    private View backView;
+    private ImageView backIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.third_reg_page);
+        binding = ThirdRegPageBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         AlertDialog.Builder builder = new AlertDialog.Builder(ThirdRegPageActivity.this, R.style.MyAlertDialog);
-        builder.setPositiveButton("ОК", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) { }
-        });
+        builder.setPositiveButton("ОК", (dialog, which) -> { });
 
         String name = getIntent().getStringExtra("Name");
         String surname = getIntent().getStringExtra("Surname");
@@ -33,33 +37,31 @@ public class ThirdRegPageActivity extends AppCompatActivity {
         Float height = getIntent().getFloatExtra("Height", 176);
         Float weight = getIntent().getFloatExtra("Weight", 60);
 
-        modelET = findViewById(R.id.modelET);
-        continueButton2 = findViewById(R.id.continueButton2);
-        continueButton2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (modelET.getText().toString().isEmpty()) {
-                    builder.setTitle("Заполните поле с названием и производителем тонометра");
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
-                }
-                else {
-                    Intent intentModel = new Intent(ThirdRegPageActivity.this, FourthRegPageActivity.class);
-                    intentModel.putExtra("Name", name);
-                    intentModel.putExtra("Surname", surname);
-                    intentModel.putExtra("Email", email);
-                    intentModel.putExtra("Password", password);
-                    intentModel.putExtra("Height", height);
-                    intentModel.putExtra("Weight", weight);
-                    intentModel.putExtra("Model", modelET.getText().toString());
-                    startActivity(intentModel);
-                }
+        modelET = binding.modelET;
+        continueButton = binding.continueButton2;
+        continueButton.setOnClickListener(view -> {
+            if (modelET.getText().toString().isEmpty()) {
+                builder.setTitle("Заполните поле с названием и производителем тонометра");
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+            else {
+                Intent intentModel = new Intent(ThirdRegPageActivity.this, FourthRegPageActivity.class);
+                intentModel.putExtra("Name", name);
+                intentModel.putExtra("Surname", surname);
+                intentModel.putExtra("Email", email);
+                intentModel.putExtra("Password", password);
+                intentModel.putExtra("Height", height);
+                intentModel.putExtra("Weight", weight);
+                intentModel.putExtra("Model", modelET.getText().toString());
+                startActivity(intentModel);
             }
         });
-    }
 
-
-    public void GetBackOnClick2(View view) {
-        finish();
+        // Кнопка назад
+        backView = binding.backView2;
+        backIcon = binding.backIcon2;
+        backIcon.setOnClickListener(view -> { finish(); });
+        backView.setOnClickListener(view -> { finish(); });
     }
 }

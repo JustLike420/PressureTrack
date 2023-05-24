@@ -15,25 +15,23 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <View
-            android:id="@+id/view2"
+            android:id="@+id/backView3"
             android:layout_width="55dp"
             android:layout_height="55dp"
             android:clickable="true"
-            android:onClick="GetBackOnClick3"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/imageView8"
+            android:id="@+id/backIcon3"
             android:layout_width="11dp"
             android:layout_height="18.5dp"
             android:clickable="true"
-            android:onClick="GetBackOnClick3"
-            app:layout_constraintBottom_toBottomOf="@+id/view2"
-            app:layout_constraintEnd_toEndOf="@+id/view2"
-            app:layout_constraintStart_toStartOf="@+id/view2"
-            app:layout_constraintTop_toTopOf="@+id/view2"
+            app:layout_constraintBottom_toBottomOf="@+id/backView3"
+            app:layout_constraintEnd_toEndOf="@+id/backView3"
+            app:layout_constraintStart_toStartOf="@+id/backView3"
+            app:layout_constraintTop_toTopOf="@+id/backView3"
             app:srcCompat="@drawable/vector__stroke_" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

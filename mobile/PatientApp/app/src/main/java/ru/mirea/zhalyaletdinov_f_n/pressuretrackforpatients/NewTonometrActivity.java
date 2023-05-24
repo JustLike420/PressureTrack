@@ -5,27 +5,33 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+
+import ru.mirea.zhalyaletdinov_f_n.pressuretrackforpatients.databinding.ActivityNewTonometrBinding;
 
 public class NewTonometrActivity extends AppCompatActivity {
 
+    private ActivityNewTonometrBinding binding;
     private Button newModButton;
+    private View backView;
+    private ImageView backIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_tonometr);
+        binding = ActivityNewTonometrBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        newModButton = findViewById(R.id.newModButton);
-        newModButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Функционал
-                finish();
-            }
+        newModButton = binding.newModButton;
+        newModButton.setOnClickListener(view -> {
+            // Функционал
+            finish();
         });
-    }
 
-    public void returnToMain(View view) {
-        finish();
+        // Кнопка назад
+        backView = binding.backViewT;
+        backIcon = binding.backIconT;
+        backIcon.setOnClickListener(view -> { finish(); });
+        backView.setOnClickListener(view -> { finish(); });
     }
 }

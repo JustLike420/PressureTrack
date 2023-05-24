@@ -29,7 +29,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <View
-            android:id="@+id/view4"
+            android:id="@+id/backViewAR"
             android:layout_width="55dp"
             android:layout_height="wrap_content"
             android:clickable="true"
@@ -39,13 +39,13 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/imageView25"
+            android:id="@+id/backIconAR"
             android:layout_width="11dp"
             android:layout_height="18.5dp"
             android:clickable="true"
             android:onClick="returnToMainFromRec"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/view4"
+            app:layout_constraintEnd_toEndOf="@+id/backViewAR"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/vector__stroke_" />

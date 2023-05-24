@@ -1,6 +1,7 @@
 package ru.mirea.zhalyaletdinov_f_n.pressuretrackforpatients;
 
 import android.content.DialogInterface;
+import ru.mirea.zhalyaletdinov_f_n.pressuretrackforpatients.databinding.FourthRegPageBinding;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -8,24 +9,27 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class FourthRegPageActivity extends AppCompatActivity {
 
+    private FourthRegPageBinding binding;
     private Button regEndButton;
+    private EditText snilsInput;
+    private View backView;
+    private ImageView backIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fourth_reg_page);
+        binding = FourthRegPageBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         AlertDialog.Builder builder = new AlertDialog.Builder(FourthRegPageActivity.this, R.style.MyAlertDialog);
-        builder.setPositiveButton("ОК", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) { }
-        });
+        builder.setPositiveButton("ОК", (dialog, which) -> { });
 
         String name = getIntent().getStringExtra("Name");
         String surname = getIntent().getStringExtra("Surname");
@@ -35,31 +39,28 @@ public class FourthRegPageActivity extends AppCompatActivity {
         Float weight = getIntent().getFloatExtra("Weight", 60);
         String model = getIntent().getStringExtra("Model");
 
-        regEndButton = findViewById(R.id.regEndButton);
-        EditText snilsInput = findViewById(R.id.snilsInput);
+        regEndButton = binding.regEndButton;
+        snilsInput = binding.snilsInput;
 
-        regEndButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        regEndButton.setOnClickListener(view -> {
 //                if (isValidSNILS(snilsInput)) {
 //                    builder.setTitle("Введен неккоректный снилс");
 //                    AlertDialog dialog = builder.create();
 //                    dialog.show();
 //                } else { }
-                if (snilsInput.getText().toString().isEmpty()) {
-                    builder.setTitle("Заполните СНИЛС врача");
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
-                } else if (snilsInput.getText().toString().replaceAll("[^0-9]", "").length() != 11) {
-                    builder.setTitle("Введен неправильный СНИЛС");
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
-                } else {
-                    String snils = snilsInput.getText().toString().replaceAll("[^0-9]", "");
-                    System.out.printf("%s\n%s\n%s\n%s\n%.2f\n%.2f\n%s\n%s\n",
-                            name, surname, email, password, height, weight, model, snils);
-                    // API - функционал
-                }
+            if (snilsInput.getText().toString().isEmpty()) {
+                builder.setTitle("Заполните СНИЛС врача");
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            } else if (snilsInput.getText().toString().replaceAll("[^0-9]", "").length() != 11) {
+                builder.setTitle("Введен неправильный СНИЛС");
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            } else {
+                String snils = snilsInput.getText().toString().replaceAll("[^0-9]", "");
+                System.out.printf("%s\n%s\n%s\n%s\n%.2f\n%.2f\n%s\n%s\n",
+                        name, surname, email, password, height, weight, model, snils);
+                // API - функционал
             }
         });
 
@@ -107,10 +108,12 @@ public class FourthRegPageActivity extends AppCompatActivity {
                 isFormatting = false;
             }
         });
-    }
 
-    public void GetBackOnClick3(View view) {
-        finish();
+        // Кнопка назад
+        backView = binding.backView3;
+        backIcon = binding.backIcon3;
+        backIcon.setOnClickListener(view -> { finish(); });
+        backView.setOnClickListener(view -> { finish(); });
     }
 
 //    public static boolean isValidSNILS(String snils) {
