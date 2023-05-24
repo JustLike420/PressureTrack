@@ -32,7 +32,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/logo_main" />
+                app:srcCompat="@drawable/logo_main"
+                android:contentDescription="logoMain" />
 
             <TextView
                 android:id="@+id/textView"
@@ -40,7 +41,7 @@
                 android:layout_height="39dp"
                 android:fontFamily="@font/inter"
                 android:gravity="center_horizontal|center_vertical"
-                android:text="Моё давление"
+                android:text="@string/logoName"
                 android:textColor="#000000"
                 android:textSize="28sp"
                 android:textStyle="bold"

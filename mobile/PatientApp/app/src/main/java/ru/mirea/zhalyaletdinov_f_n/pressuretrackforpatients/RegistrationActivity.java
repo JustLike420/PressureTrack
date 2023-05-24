@@ -3,6 +3,9 @@ package ru.mirea.zhalyaletdinov_f_n.pressuretrackforpatients;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import ru.mirea.zhalyaletdinov_f_n.pressuretrackforpatients.databinding.ActivityLoginBinding;
+import ru.mirea.zhalyaletdinov_f_n.pressuretrackforpatients.databinding.ActivityRegistrationBinding;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,23 +22,28 @@ import java.util.regex.Pattern;
 
 public class RegistrationActivity extends AppCompatActivity {
 
-    private Button regWButton;
+    ActivityRegistrationBinding binding;
+    Button regWButton, accountButton;
+    EditText fioTV, emailTV, passwordTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registration);
+        binding = ActivityRegistrationBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
         AlertDialog.Builder builder = new AlertDialog.Builder(RegistrationActivity.this, R.style.MyAlertDialog);
+
         builder.setPositiveButton("ОК", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) { }
         });
 
-        EditText fioTV = findViewById(R.id.fioInput);
-        EditText emailTV = findViewById(R.id.emailInput);
-        EditText passwordTV = findViewById(R.id.passwordRegInput);
+        fioTV = binding.fioInput;
+        emailTV = binding.emailInput;
+        passwordTV = binding.passwordRegInput;
 
-        regWButton = findViewById(R.id.regWButton);
+        regWButton = binding.regWButton;
         regWButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -75,10 +83,14 @@ public class RegistrationActivity extends AppCompatActivity {
                 }
             }
         });
-    }
 
-    public void AuthPageOnButtonClick(View view) {
-        finish();
+        accountButton = binding.accountButton;
+        accountButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     public boolean isValidFIO(String input) {

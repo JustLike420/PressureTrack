@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import ru.mirea.zhalyaletdinov_f_n.doctorapp.databinding.ActivityLoginBinding;
 import ru.mirea.zhalyaletdinov_f_n.doctorapp.databinding.ActivityMainBinding;
 
 import android.os.Bundle;
@@ -27,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = binding.rvMain;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(new PatientCardAdapter());
+
+
     }
 
     static class PatientCardHolder extends RecyclerView.ViewHolder {

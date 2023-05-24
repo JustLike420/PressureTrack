@@ -12,14 +12,4 @@
         <item name="buttonBarNeutralButtonStyle">@style/MyAlertDialogButton</item>
     </style>
 
-    <style name="MyAlertDialog" parent="Theme.MaterialComponents.Light.Dialog.Alert">
-        <item name="android:textSize">18sp</item>
-        <item name="android:fontFamily">@font/inter</item>
-        <item name="android:letterSpacing">-0.02</item>
-        <item name="android:dialogCornerRadius">30px</item>
-        <item name="android:textColor">#1D1D1D</item>
-        <item name="buttonBarPositiveButtonStyle">@style/MyAlertDialogButton</item>
-        <item name="buttonBarNegativeButtonStyle">@style/MyAlertDialogButton</item>
-        <item name="buttonBarNeutralButtonStyle">@style/MyAlertDialogButton</item>
-    </style>
 </resources>

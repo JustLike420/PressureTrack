@@ -16,4 +16,35 @@
 <item> 3.\tПоложите манжету артериального\n\t\t\tдавления на середину руки,\n\t\t\t2-3 см выше локтя.</item>\n
 <item> 4.\tПоложите руку на уровне сердца.</item>\n
 <item> 5.\tПоставьте ноги на пол.\n\t\t\tНе скрещивайте.</item></string_array></string>
+    <string name="onWeekLabel">За неделю</string>
+    <string name="noData">—</string>
+    <string name="CureLabel">Лечение</string>
+    <string name="WelcomeLabel">Добрый день,\n</string>
+    <string name="GraphLabel">График замеров</string>
+    <string name="DateRange">—</string>
+    <string name="TodayCardsLabel">За сегодня</string>
+    <string name="GuideLabel">Как правильно замерять давление?</string>
+    <string name="TonometrLabel">Вы используете тонометр</string>
+    <string name="question">Уже другой?</string>
+    <string name="updateTonometreLabel">Обновить</string>
+    <string name="model">Model</string>
+    <string name="logoutLabel">Выйти</string>
+    <string name="addRecordLabel">Добавить замер</string>
+    <string name="cureDesc">TextView</string>
+    <string name="logoName">Моё давление</string>
+    <string name="regLabel">Регистрация</string>
+    <string name="loginLabel">Вход</string>
+    <string name="loginHintLabel">Телефон или почта</string>
+    <string name="passwordLoginLabel">Пароль</string>
+    <string name="registerButtonLabel">Зарегистрироваться</string>
+    <string name="loginButtonLabel">Войти</string>
+    <string name="forgotLabel">Забыли пароль?</string>
+    <string name="fioLabel">Ваше имя и фамилия</string>
+    <string name="emailLabel">Ваш телефон или почта</string>
+    <string name="passwordHintLabel">Придумайте пароль</string>
+    <string name="returnLabel">У меня уже есть аккаунт</string>
+    <string name="SecPageLabel">Пожалуйста, укажите ваш рост и вес</string>
+    <string name="heightLabel">Рост</string>
+    <string name="weightLabel">Вес</string>
+    <string name="goTo3PageLabel">Вперед</string>
 </resources>

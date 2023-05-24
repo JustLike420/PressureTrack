@@ -33,16 +33,13 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:id="@+id/textView9"
+                    android:id="@+id/welcomeLabel"
                     android:layout_width="262dp"
                     android:layout_height="58dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="32dp"
-                    android:letterSpacing="0.02"
-                    android:text="Добрый день,\nМаксим Дмитриевич"
-                    android:textColor="#1D1D1D"
-                    android:textSize="24sp"
-                    android:textStyle="bold"
+                    style="@style/heading_2_s"
+                    android:text="@string/WelcomeLabel"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -72,11 +69,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="21dp"
-                        android:fontFamily="@font/inter"
-                        android:text="Лечение"
-                        android:textColor="#1D1D1D"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
+                        style="@style/heading_3_s"
+                        android:text="@string/CureLabel"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -86,12 +80,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="52dp"
-                        android:fontFamily="@font/inter"
                         android:gravity="top"
-                        android:lineSpacingExtra="1sp"
-                        android:text="TextView"
-                        android:textColor="#646978"
-                        android:textSize="15sp"
+                        android:text="@string/cureDesc"
+                        style="@style/description"
                         android:translationY="-0.6sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -110,8 +101,9 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintLayout11"
                     android:layout_width="343dp"
-                    android:layout_height="705dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    android:paddingBottom="32dp"
                     android:background="@drawable/edittext_border"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -123,11 +115,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="21dp"
-                        android:fontFamily="@font/inter"
-                        android:text="График замеров"
-                        android:textColor="#1D1D1D"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
+                        style="@style/heading_3_s"
+                        android:text="@string/GraphLabel"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -150,6 +139,13 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
+                        <com.github.mikephil.charting.charts.BarChart
+                            android:layout_width="match_parent"
+                            android:layout_height="163dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <EditText
                             android:id="@+id/editTextDate"
@@ -189,7 +185,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="15.5dp"
                             android:fontFamily="@font/inter"
-                            android:text="—"
+                            android:text="@string/DateRange"
                             android:textSize="14sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/editTextDate2"
@@ -202,12 +198,10 @@
                         android:layout_height="19dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="16dp"
-                        android:fontFamily="@font/inter"
                         android:gravity="top"
                         android:lineSpacingExtra="1sp"
-                        android:text="За сегодня"
-                        android:textColor="#646978"
-                        android:textSize="15sp"
+                        android:text="@string/TodayCardsLabel"
+                        style="@style/description"
                         android:translationY="-0.6sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/constraintLayout18" />
@@ -217,399 +211,34 @@
                         android:layout_width="wrap_content"
                         android:layout_height="19dp"
                         android:layout_marginStart="16dp"
-                        android:layout_marginTop="157dp"
-                        android:fontFamily="@font/inter"
+                        android:layout_marginTop="24dp"
                         android:gravity="top"
                         android:lineSpacingExtra="1sp"
-                        android:text="За неделю"
-                        android:textColor="#646978"
-                        android:textSize="15sp"
+                        android:text="@string/onWeekLabel"
                         android:translationY="-0.6sp"
+                        style="@style/description"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/constraintLayout18" />
+                        app:layout_constraintTop_toBottomOf="@+id/rvToday" />
 
-                    <TableLayout
-                        android:id="@+id/tableLayout"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvToday"
                         android:layout_width="312dp"
-                        android:layout_height="117dp"
-                        android:layout_marginTop="35dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.483"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/constraintLayout18" />
+                        app:layout_constraintTop_toBottomOf="@+id/textView22" />
 
-                    <TableLayout
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvWeek"
                         android:layout_width="312dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="184dp"
+                        android:layout_marginTop="16dp"
                         app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.483"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/constraintLayout18">
-
-                        <TableRow
-                            android:layout_width="match_parent"
-                            android:layout_height="22dp"
-                            android:gravity="center_vertical">
-
-                            <ImageView
-                                android:id="@+id/imageView13"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                app:srcCompat="@drawable/ellipse_green" />
-
-                            <TextView
-                                android:id="@+id/todayPres"
-                                android:layout_width="59dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="8dp"
-                                android:fontFamily="@font/inter"
-                                android:text="—"
-                                android:textColor="#1D1D1D"
-                                android:textSize="18sp"
-                                android:textStyle="bold" />
-
-                            <ImageView
-                                android:id="@+id/imageView14"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="15dp"
-                                app:srcCompat="@drawable/ellipse_red" />
-
-                            <TextView
-                                android:id="@+id/todayHB"
-                                android:layout_width="23dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="8dp"
-                                android:fontFamily="@font/inter"
-                                android:text="—"
-                                android:textColor="#1D1D1D"
-                                android:textSize="18sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/todayDate"
-                                android:layout_width="64dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="119dp"
-                                android:fontFamily="@font/inter"
-                                android:text="—"
-                                android:textColor="#646978"
-                                android:textSize="12sp" />
-                        </TableRow>
-
-
-                        <TableRow
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginTop="8dp"
-                            android:gravity="center_vertical">
-
-                            <ImageView
-                                android:id="@+id/imageView15"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                app:srcCompat="@drawable/ellipse_green" />
-
-                            <TextView
-                                android:id="@+id/onedayPres"
-                                android:layout_width="59dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="8dp"
-                                android:fontFamily="@font/inter"
-                                android:text="—"
-                                android:textColor="#1D1D1D"
-                                android:textSize="18sp"
-                                android:textStyle="bold" />
-
-                            <ImageView
-                                android:id="@+id/imageView16"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="15dp"
-                                app:srcCompat="@drawable/ellipse_red" />
-
-                            <TextView
-                                android:id="@+id/onedayHB"
-                                android:layout_width="23dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="8dp"
-                                android:fontFamily="@font/inter"
-                                android:text="—"
-                                android:textColor="#1D1D1D"
-                                android:textSize="18sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/onedayDate"
-                                android:layout_width="64dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="119dp"
-                                android:fontFamily="@font/inter"
-                                android:text="—"
-                                android:textColor="#646978"
-                                android:textSize="12sp" />
-                        </TableRow>
-
-                        <TableRow
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginTop="8dp"
-                            android:gravity="center_vertical">
-
-                            <ImageView
-                                android:id="@+id/imageView17"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                app:srcCompat="@drawable/ellipse_green" />
-
-                            <TextView
-                                android:id="@+id/twodayPres"
-                                android:layout_width="59dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="8dp"
-                                android:fontFamily="@font/inter"
-                                android:text="—"
-                                android:textColor="#1D1D1D"
-                                android:textSize="18sp"
-                                android:textStyle="bold" />
-
-                            <ImageView
-                                android:id="@+id/imageView18"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="15dp"
-                                app:srcCompat="@drawable/ellipse_red" />
-
-                            <TextView
-                                android:id="@+id/twodayHB"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="8dp"
-                                android:fontFamily="@font/inter"
-                                android:text="—"
-                                android:textColor="#1D1D1D"
-                                android:textSize="18sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/twodayDate"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="119dp"
-                                android:fontFamily="@font/inter"
-                                android:text="—"
-                                android:textColor="#646978"
-                                android:textSize="12sp" />
-                        </TableRow>
-
-                        <TableRow
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginTop="8dp"
-                            android:gravity="center_vertical">
-
-                            <ImageView
-                                android:id="@+id/imageView19"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                app:srcCompat="@drawable/ellipse_green" />
-
-                            <TextView
-                                android:id="@+id/threedayPres"
-                                android:layout_width="59dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="8dp"
-                                android:fontFamily="@font/inter"
-                                android:text="—"
-                                android:textColor="#1D1D1D"
-                                android:textSize="18sp"
-                                android:textStyle="bold" />
-
-                            <ImageView
-                                android:id="@+id/imageView20"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="15dp"
-                                app:srcCompat="@drawable/ellipse_red" />
-
-                            <TextView
-                                android:id="@+id/threedayHB"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="8dp"
-                                android:fontFamily="@font/inter"
-                                android:text="—"
-                                android:textColor="#1D1D1D"
-                                android:textSize="18sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/threedayDate"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="119dp"
-                                android:fontFamily="@font/inter"
-                                android:text="—"
-                                android:textColor="#646978"
-                                android:textSize="12sp" />
-                        </TableRow>
-
-                        <TableRow
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginTop="8dp"
-                            android:gravity="center_vertical">
-
-                            <ImageView
-                                android:id="@+id/imageView21"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                app:srcCompat="@drawable/ellipse_green" />
-
-                            <TextView
-                                android:id="@+id/fourdayPres"
-                                android:layout_width="59dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="8dp"
-                                android:fontFamily="@font/inter"
-                                android:text="—"
-                                android:textColor="#1D1D1D"
-                                android:textSize="18sp"
-                                android:textStyle="bold" />
-
-                            <ImageView
-                                android:id="@+id/imageView22"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="15dp"
-                                app:srcCompat="@drawable/ellipse_red" />
-
-                            <TextView
-                                android:id="@+id/fourdayHB"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="8dp"
-                                android:fontFamily="@font/inter"
-                                android:text="—"
-                                android:textColor="#1D1D1D"
-                                android:textSize="18sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/fourdayDate"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="119dp"
-                                android:fontFamily="@font/inter"
-                                android:text="—"
-                                android:textColor="#646978"
-                                android:textSize="12sp" />
-                        </TableRow>
-
-                        <TableRow
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginTop="8dp"
-                            android:gravity="center_vertical">
-
-                            <ImageView
-                                android:id="@+id/imageView23"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                app:srcCompat="@drawable/ellipse_green" />
-
-                            <TextView
-                                android:id="@+id/fivedayPres"
-                                android:layout_width="59dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="8dp"
-                                android:fontFamily="@font/inter"
-                                android:text="—"
-                                android:textColor="#1D1D1D"
-                                android:textSize="18sp"
-                                android:textStyle="bold" />
-
-                            <ImageView
-                                android:id="@+id/imageView24"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="15dp"
-                                app:srcCompat="@drawable/ellipse_red" />
-
-                            <TextView
-                                android:id="@+id/fivedayHB"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="8dp"
-                                android:fontFamily="@font/inter"
-                                android:text="—"
-                                android:textColor="#1D1D1D"
-                                android:textSize="18sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/fivedayDate"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="119dp"
-                                android:fontFamily="@font/inter"
-                                android:text="—"
-                                android:textColor="#646978"
-                                android:textSize="12sp" />
-                        </TableRow>
-
-                        <TableRow
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginTop="8dp"
-                            android:gravity="center_vertical">
-
-                            <ImageView
-                                android:id="@+id/imageView27"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                app:srcCompat="@drawable/ellipse_green" />
-
-                            <TextView
-                                android:id="@+id/sixdayPres"
-                                android:layout_width="59dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="8dp"
-                                android:fontFamily="@font/inter"
-                                android:text="—"
-                                android:textColor="#1D1D1D"
-                                android:textSize="18sp"
-                                android:textStyle="bold" />
-
-                            <ImageView
-                                android:id="@+id/imageView28"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="15dp"
-                                app:srcCompat="@drawable/ellipse_red" />
-
-                            <TextView
-                                android:id="@+id/sixdayHB"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="8dp"
-                                android:fontFamily="@font/inter"
-                                android:text="—"
-                                android:textColor="#1D1D1D"
-                                android:textSize="18sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/sixdayDate"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="119dp"
-                                android:fontFamily="@font/inter"
-                                android:text="—"
-                                android:textColor="#646978"
-                                android:textSize="12sp" />
-                        </TableRow>
-                    </TableLayout>
+                        app:layout_constraintTop_toBottomOf="@+id/textView23" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -632,7 +261,7 @@
                         android:layout_marginTop="16dp"
                         android:fontFamily="@font/inter"
                         android:letterSpacing="0.02"
-                        android:text="Как правильно замерять давление?"
+                        android:text="@string/GuideLabel"
                         android:textColor="#1D1D1D"
                         android:textSize="18sp"
                         android:textStyle="bold"
@@ -685,7 +314,7 @@
                         android:fontFamily="@font/inter"
                         android:gravity="top"
                         android:lineSpacingExtra="1sp"
-                        android:text="Вы используете тонометр"
+                        android:text="@string/TonometrLabel"
                         android:textColor="#646978"
                         android:textSize="15sp"
                         android:translationY="-0.6sp"
@@ -701,7 +330,7 @@
                         android:fontFamily="@font/inter"
                         android:gravity="top"
                         android:lineSpacingExtra="1sp"
-                        android:text="Уже другой?"
+                        android:text="@string/question"
                         android:textColor="#646978"
                         android:textSize="15sp"
                         android:translationY="-0.6sp"
@@ -719,7 +348,7 @@
                         android:fontFamily="@font/inter"
                         android:gravity="top"
                         android:lineSpacingExtra="1sp"
-                        android:text="Обновить"
+                        android:text="@string/updateTonometreLabel"
                         android:textColor="#0082FF"
                         android:textColorHighlight="#0082FF"
                         android:textColorLink="#0082FF"
@@ -737,7 +366,7 @@
                         android:fontFamily="@font/inter"
                         android:gravity="top"
                         android:lineSpacingExtra="1sp"
-                        android:text="Model"
+                        android:text="@string/model"
                         android:textColor="#1D1D1D"
                         android:textSize="18sp"
                         android:textStyle="bold"
@@ -748,18 +377,12 @@
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/logoutButton"
-                    android:onClick="logoutOnClick"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    style="@style/logout_button_label"
                     android:background="@drawable/button_white"
-                    android:fontFamily="@font/inter"
-                    android:letterSpacing="0.01"
-                    android:text="Выйти"
-                    android:textStyle="bold"
-                    android:textAllCaps="false"
-                    android:textColor="#FF5151"
-                    android:textSize="16sp"
+                    android:text="@string/logoutLabel"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/constraintLayout17" />
@@ -779,17 +402,12 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/addRecordButton"
-            android:onClick="addRecordOnClick"
             android:layout_width="343dp"
             android:layout_height="48dp"
             android:layout_marginTop="14dp"
-            android:text="Добавить замер"
+            android:text="@string/addRecordLabel"
             android:background="@drawable/button_blue"
-            android:fontFamily="@font/inter"
-            android:letterSpacing="0.01"
-            android:textAllCaps="false"
-            android:textColor="#FFFFFF"
-            android:textSize="18dp"
+            style="@style/blue_button_label"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
