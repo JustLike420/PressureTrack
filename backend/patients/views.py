@@ -1,43 +1,63 @@
-from datetime import datetime, timedelta
-
-from django.db.models import Q
-from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import viewsets
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
+from rest_framework import viewsets, status
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from doctors.models import Treatment
+from doctors.serializers import TreatmentSerializer
 from patients.models import Measurement, Patient
 from patients.serializers import MeasurementSerializer, PatientSerializer, DeviceSerializer
 
 
-class PatientView(viewsets.ModelViewSet):
-    serializer_class = PatientSerializer
-    queryset = Patient.objects.all()
-    filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['user_id']
+class PatientView(APIView):
+    permission_classes = [IsAuthenticated]
 
-    def get_queryset(self):
-        queryset = self.queryset.filter(user_id=self.kwargs['user_id'])
-        return queryset
-
-
-class DeviceView(viewsets.ModelViewSet):
-    serializer_class = DeviceSerializer
-
-    def update(self, request, *args, **kwargs):
-        if patient := Patient.objects.filter(user=request.user):
-            patient.update(device=request.data['device'])
-        return {"success": True}
+    @swagger_auto_schema(responses={
+        200: openapi.Response('response description', PatientSerializer)
+    })
+    def get(self, request):
+        queryset = Patient.objects.get(user=self.request.user)
+        serializer = PatientSerializer(queryset)
+        return Response(serializer.data)
 
 
-class MeasurementView(viewsets.ModelViewSet):
-    serializer_class = MeasurementSerializer
-    # filter for one week
+class DeviceView(APIView):
+    permission_classes = [IsAuthenticated]
 
+    @swagger_auto_schema(
+        request_body=DeviceSerializer,
+        responses={200: openapi.Response('response description', PatientSerializer)}
+    )
+    def put(self, request):
+        patient = Patient.objects.get(user=self.request.user)
+        device = request.data.get('device')
+        patient.device = device
+        patient.save()
+        serializer = PatientSerializer(patient)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class MeasurementsView(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
     queryset = Measurement.objects.all()
-    filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['created_at', 'patient_id']
+    serializer_class = MeasurementSerializer
+
+    def perform_create(self, serializer):
+        patient = Patient.objects.get(user=self.request.user)
+        serializer.save(patient=patient)
 
     def get_queryset(self):
-        week_ago = datetime.now() - timedelta(days=7)
-        queryset = self.queryset.filter(Q(created_at__gte=week_ago), patient_id=self.kwargs['patient_id'])
-        return queryset
+        q = Measurement.objects.filter(patient=Patient.objects.get(user=self.request.user))
+        return q
+
+
+class TreatmentsView(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    queryset = Treatment.objects.all()
+    serializer_class = TreatmentSerializer
+
+    def get_queryset(self):
+        q = Treatment.objects.filter(patient=Patient.objects.get(user=self.request.user))
+        return q
