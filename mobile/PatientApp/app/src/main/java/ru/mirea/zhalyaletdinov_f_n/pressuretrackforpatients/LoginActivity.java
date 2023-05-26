@@ -34,33 +34,29 @@ public class LoginActivity extends AppCompatActivity {
 
         loginTV = binding.loginEmailInput;
         passwordTV = binding.passwordLoginInput;
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (loginTV.getText().toString().isEmpty() || passwordTV.getText().toString().isEmpty()) {
-                    builder.setTitle("Неверные данные");
-                    builder.setMessage("Неправильный номер телефона/email или пароль");
-                    builder.setPositiveButton("ОК", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                        }
-                    });
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
-                } else {
-                    Intent LoginIntent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(LoginIntent);
-                    finish();
-                }
+
+        loginButton.setOnClickListener(view -> {
+
+            // API FUNCTIONALITY
+
+
+            if (loginTV.getText().toString().isEmpty() || passwordTV.getText().toString().isEmpty()) {
+                builder.setTitle("Неверные данные");
+                builder.setMessage("Неправильный номер телефона/email или пароль");
+                builder.setPositiveButton("ОК", (dialog, which) -> { });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            } else {
+
+                Intent LoginIntent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(LoginIntent);
+                finish();
             }
         });
 
-        registerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent RegIntent = new Intent(LoginActivity.this,  RegistrationActivity.class);
-                startActivity(RegIntent);
-            }
+        registerButton.setOnClickListener(view -> {
+            Intent RegIntent = new Intent(LoginActivity.this,  RegistrationActivity.class);
+            startActivity(RegIntent);
         });
     }
 }

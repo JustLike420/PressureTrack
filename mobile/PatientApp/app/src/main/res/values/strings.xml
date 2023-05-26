@@ -47,4 +47,11 @@
     <string name="heightLabel">Рост</string>
     <string name="weightLabel">Вес</string>
     <string name="goTo3PageLabel">Вперед</string>
+    <string name="lastRegLabel">Последний шаг — ваш тонометр</string>
+    <string name="modelRegHint">Изготовитель и модель</string>
+    <string name="thirdRegPageButtonLabel">Продолжить</string>
+    <string name="docRegPageLabel">Теперь, можно записаться к врачу</string>
+    <string name="docRegInputHint">Введите СНИЛС лечащего врача</string>
+    <string name="snilsHint">000-000-000 00</string>
+    <string name="buttonCompRegLabel">Подтвердить</string>
 </resources>
