@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.patient_card, parent, false);
+            // Реализовать связку и clickListener
             return new PatientCardHolder(view);
         }
 

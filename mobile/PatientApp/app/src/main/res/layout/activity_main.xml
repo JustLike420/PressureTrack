@@ -358,7 +358,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/textView14"
+                        android:id="@+id/deviceModelLabel"
                         android:layout_width="311dp"
                         android:layout_height="22dp"
                         android:layout_marginStart="16dp"
