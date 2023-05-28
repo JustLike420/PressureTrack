@@ -11,7 +11,7 @@ class Patient(models.Model):
         primary_key=True,
         unique=True
     )
-    age = models.IntegerField()
+    age = models.IntegerField(blank=True, null=True)
     height = models.FloatField()
     weight = models.FloatField()
     device = models.TextField()
@@ -29,7 +29,7 @@ class Measurement(models.Model):
     top = models.IntegerField()
     bottom = models.IntegerField()
     pulse = models.IntegerField()
-    comment = models.TextField()
+    comment = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
