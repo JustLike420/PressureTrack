@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from doctors.models import Treatment
-from doctors.serializers import TreatmentSerializer
+from doctors.serializers import TreatmentListSerializer
 from patients.models import Measurement, Patient
 from patients.serializers import MeasurementSerializer, PatientSerializer, DeviceSerializer
 
@@ -56,7 +56,7 @@ class MeasurementsView(viewsets.ModelViewSet):
 class TreatmentsView(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = Treatment.objects.all()
-    serializer_class = TreatmentSerializer
+    serializer_class = TreatmentListSerializer
 
     def get_queryset(self):
         q = Treatment.objects.filter(patient=Patient.objects.get(user=self.request.user))
