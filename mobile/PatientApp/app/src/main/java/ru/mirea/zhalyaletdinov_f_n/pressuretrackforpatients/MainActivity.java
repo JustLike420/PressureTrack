@@ -26,6 +26,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
 
@@ -35,12 +36,15 @@ import org.json.JSONObject;
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
-    private Button logoutButton;
-    APIInterface apiInterface;
-    private BarChart chart;
     private ActivityMainBinding binding;
+    APIInterface apiInterface;
+    private String token;
+    private BarChart chart;
     private Button addRecordButton;
+    private Button logoutButton;
+    private TextView newTonLabel;
     private RecyclerView rv1, rv2;
+    private PatientProfile patientProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        String token = sharedPreferences.getString("token", "");
+        token = sharedPreferences.getString("token", "");
         System.out.println(token);
         mainLoader(token);
 
@@ -63,14 +67,49 @@ public class MainActivity extends AppCompatActivity {
 
         logoutButton = binding.logoutButton;
         logoutButton.setOnClickListener(view -> {
-            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-            startActivity(intent);
-            finish();
+            apiInterface = APIClient.getClient().create(APIInterface.class);
+            Call<Void> call = apiInterface.logout("Token " + token);
+            call.enqueue(new Callback<Void>() {
+                @Override
+                public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                    if (response.isSuccessful()) {
+                        saveTokenToSharedPreferences("");
+
+                        runOnUiThread(() -> {
+                            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                            startActivity(intent);
+                            finish();
+                        });
+                    } else {
+                        runOnUiThread(() -> {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.MyAlertDialog);
+                            builder.setTitle("Неверные данные");
+                            builder.setMessage("Неправильный номер телефона/email или пароль");
+                            builder.setPositiveButton("ОК", (dialog, which) -> {});
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
+                            Log.e("Response", response.toString());
+                        });
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+                    call.cancel();
+                }
+            });
         });
 
         addRecordButton = binding.addRecordButton;
         addRecordButton.setOnClickListener(view -> {
             Intent intent = new Intent(MainActivity.this, AddRecordActivity.class);
+            startActivity(intent);
+        });
+
+        newTonLabel = binding.newTonLabel;
+        newTonLabel.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, NewTonometrActivity.class);
+            intent.putExtra("patient", patientProfile.getDevice().trim());
             startActivity(intent);
         });
     }
@@ -82,13 +121,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<PatientProfile> call, @NonNull Response<PatientProfile> response) {
                 if (response.isSuccessful()){
-                    PatientProfile patientProfile = response.body();
+                    patientProfile = response.body();
                     String name = patientProfile.getUser().getFirstName();
                     String last_name = patientProfile.getUser().getLastName();
                     String device = patientProfile.getDevice();
 
                     runOnUiThread(() -> {
-                        String text = binding.welcomeLabel.getText().toString() + name + " " + last_name;
+                        String text = "Добрый день\n" + name + " " + last_name;
                         binding.welcomeLabel.setText(text);
                         binding.deviceModelLabel.setText(device);
                     });
@@ -114,9 +153,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void newModOnClick(View view) {
-        Intent intent = new Intent(MainActivity.this, NewTonometrActivity.class);
-        startActivity(intent);
+    private void saveTokenToSharedPreferences(String token) {
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("token", token);
+        editor.apply();
     }
 
     class RecordCards extends RecyclerView.ViewHolder {
@@ -161,4 +202,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        mainLoader(token);
+    }
 }

@@ -1,22 +1,38 @@
 package ru.mirea.zhalyaletdinov_f_n.pressuretrackforpatients;
 
+import android.content.Context;
 import android.content.DialogInterface;
+
+import okhttp3.Request;
+import okio.Timeout;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import ru.mirea.zhalyaletdinov_f_n.pressuretrackforpatients.databinding.FourthRegPageBinding;
+
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.io.IOException;
 
 public class FourthRegPageActivity extends AppCompatActivity {
 
     private FourthRegPageBinding binding;
+    APIInterface apiInterface;
+    String token;
     private Button regEndButton;
     private EditText snilsInput;
     private View backView;
@@ -60,7 +76,9 @@ public class FourthRegPageActivity extends AppCompatActivity {
                 String snils = snilsInput.getText().toString().replaceAll("[^0-9]", "");
                 System.out.printf("%s\n%s\n%s\n%s\n%.2f\n%.2f\n%s\n%s\n",
                         name, surname, email, password, height, weight, model, snils);
-                // API - функционал
+                CreatePatient.UserCreate user = new CreatePatient.UserCreate(name, surname, null, email, password);
+                CreatePatient patient = new CreatePatient(user, snils, 0, height, weight, model);
+                registration(patient);
             }
         });
 
@@ -114,6 +132,82 @@ public class FourthRegPageActivity extends AppCompatActivity {
         backIcon = binding.backIcon3;
         backIcon.setOnClickListener(view -> { finish(); });
         backView.setOnClickListener(view -> { finish(); });
+    }
+
+    private void registration(CreatePatient patient) {
+        apiInterface = APIClient.getClient().create(APIInterface.class);
+        Call<CreatePatient> call = apiInterface.createPatient(patient);
+        call.enqueue(new Callback<CreatePatient>() {
+            @Override
+            public void onResponse(@NonNull Call<CreatePatient> call, @NonNull Response<CreatePatient> response) {
+                if (response.isSuccessful()) {
+                    auth(patient);
+                } else {
+                    runOnUiThread(() -> {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(FourthRegPageActivity.this, R.style.MyAlertDialog);
+                        builder.setTitle("Неверные данные");
+                        builder.setMessage("Введены неправильные данные при регистрации");
+                        builder.setPositiveButton("ОК", (dialog, which) -> {});
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                        Log.e("Response", response.toString());
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<CreatePatient> call, @NonNull Throwable t) {
+                call.cancel();
+            }
+        });
+    }
+
+    private void auth(CreatePatient patient) {
+        apiInterface = APIClient.getClient().create(APIInterface.class);
+        LoginData loginData = new LoginData(patient.getUser().getEmail().trim(), patient.getUser().getPassword().trim());
+        Call<LoginResponse> call = apiInterface.performLogin(loginData);
+        call.enqueue(new Callback<LoginResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<LoginResponse> call, @NonNull Response<LoginResponse> response) {
+                if (response.isSuccessful()) {
+                    LoginResponse responseBody = response.body();
+                    String token = responseBody.getAuthToken();
+                    Log.d("Token", token);
+                    saveTokenToSharedPreferences(token);
+                    System.out.println(token);
+
+                    runOnUiThread(() -> {
+                        Intent mainIntent = new Intent(FourthRegPageActivity.this, MainActivity.class);
+                        startActivity(mainIntent);
+                        finish();
+                    });
+                } else {
+                    runOnUiThread(() -> {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(FourthRegPageActivity.this, R.style.MyAlertDialog);
+                        builder.setTitle("Ошибка");
+                        builder.setMessage("Не удалось авторизоваться");
+                        builder.setPositiveButton("ОК", (dialog, which) -> {});
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                        Log.e("Response", response.toString());
+                        Intent loginIntent = new Intent(FourthRegPageActivity.this, LoginActivity.class);
+                        startActivity(loginIntent);
+                        finish();
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<LoginResponse> call, @NonNull Throwable t) {
+                call.cancel();
+            }
+        });
+    }
+    private void saveTokenToSharedPreferences(String token) {
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("token", token);
+        editor.apply();
     }
 
 //    public static boolean isValidSNILS(String snils) {

@@ -57,9 +57,6 @@ public class LoginActivity extends AppCompatActivity {
         loginTV = binding.loginEmailInput;
         passwordTV = binding.passwordLoginInput;
 
-        loginTV.setText("patient@e.com");
-        passwordTV.setText("RSxfQPIB^6QXWnby");
-
         loginButton.setOnClickListener(view -> {
             LoginData loginData = new LoginData(loginTV.getText().toString().trim(), passwordTV.getText().toString().trim());
             Call<LoginResponse> call = apiInterface.performLogin(loginData);
