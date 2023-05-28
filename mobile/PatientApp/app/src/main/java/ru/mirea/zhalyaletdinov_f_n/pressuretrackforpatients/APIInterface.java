@@ -1,5 +1,7 @@
 package ru.mirea.zhalyaletdinov_f_n.pressuretrackforpatients;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Header;
@@ -22,4 +24,10 @@ public interface APIInterface {
 
     @PUT("patient/change_device/")
     Call<PatientProfile> changeDevice(@Header("Authorization") String token, @Body Device device);
+
+    @POST("patient/measurements/")
+    Call<Void> sendRecord(@Header("Authorization") String token, @Body Measurment measurment);
+
+    @GET("patient/treatments/")
+    Call<List<Treatment>> getTreatment(@Header("Authorization") String token);
 }

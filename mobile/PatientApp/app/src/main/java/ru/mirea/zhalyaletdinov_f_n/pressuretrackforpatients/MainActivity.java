@@ -34,6 +34,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         token = sharedPreferences.getString("token", "");
         System.out.println(token);
         mainLoader(token);
+        treatmentLoad(token);
 
         rv1 = binding.rvToday;
         rv1.setLayoutManager(new LinearLayoutManager(this));
@@ -109,7 +111,6 @@ public class MainActivity extends AppCompatActivity {
         newTonLabel = binding.newTonLabel;
         newTonLabel.setOnClickListener(view -> {
             Intent intent = new Intent(MainActivity.this, NewTonometrActivity.class);
-            intent.putExtra("patient", patientProfile.getDevice().trim());
             startActivity(intent);
         });
     }
@@ -127,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
                     String device = patientProfile.getDevice();
 
                     runOnUiThread(() -> {
-                        String text = "Добрый день\n" + name + " " + last_name;
+                        String text = "Добрый день,\n" + name + " " + last_name;
                         binding.welcomeLabel.setText(text);
                         binding.deviceModelLabel.setText(device);
                     });
@@ -148,6 +149,29 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<PatientProfile> call, @NonNull Throwable t) {
+                call.cancel();
+            }
+        });
+    }
+
+    private void treatmentLoad(String token) {
+        apiInterface = APIClient.getClient().create(APIInterface.class);
+        Call<List<Treatment>> call = apiInterface.getTreatment("Token " + token);
+        call.enqueue(new Callback<List<Treatment>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<Treatment>> call, @NonNull Response<List<Treatment>> response) {
+                if (response.isSuccessful()) {
+                    List<Treatment> list_treatment = response.body();
+                    Treatment treatment = list_treatment.get(0);
+                    String message = treatment.getMessage();
+                    runOnUiThread(() -> {
+                        binding.treatmentText.setText(message);
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<List<Treatment>> call, @NonNull Throwable t) {
                 call.cancel();
             }
         });

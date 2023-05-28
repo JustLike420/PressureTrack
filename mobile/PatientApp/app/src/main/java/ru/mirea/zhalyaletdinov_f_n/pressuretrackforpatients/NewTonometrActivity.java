@@ -36,9 +36,6 @@ public class NewTonometrActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         token = sharedPreferences.getString("token", "");
 
-        Intent intent = getIntent();
-        device = intent.getStringExtra("device");
-
         newModButton = binding.newModButton;
         newModButton.setOnClickListener(view -> {
             if (binding.deviceET.getText().toString().isEmpty()) {
@@ -50,7 +47,7 @@ public class NewTonometrActivity extends AppCompatActivity {
                 dialog.show();
             } else {
                 apiInterface = APIClient.getClient().create(APIInterface.class);
-                Device deviceObj = new Device(device);
+                Device deviceObj = new Device(binding.deviceET.getText().toString().trim());
                 Call<PatientProfile> call = apiInterface.changeDevice("Token " + token, deviceObj);
                 call.enqueue(new Callback<PatientProfile>() {
                     @Override

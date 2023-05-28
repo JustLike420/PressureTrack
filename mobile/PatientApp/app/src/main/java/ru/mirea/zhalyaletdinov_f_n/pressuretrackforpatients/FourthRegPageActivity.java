@@ -59,11 +59,6 @@ public class FourthRegPageActivity extends AppCompatActivity {
         snilsInput = binding.snilsInput;
 
         regEndButton.setOnClickListener(view -> {
-//                if (isValidSNILS(snilsInput)) {
-//                    builder.setTitle("Введен неккоректный снилс");
-//                    AlertDialog dialog = builder.create();
-//                    dialog.show();
-//                } else { }
             if (snilsInput.getText().toString().isEmpty()) {
                 builder.setTitle("Заполните СНИЛС врача");
                 AlertDialog dialog = builder.create();
@@ -209,27 +204,4 @@ public class FourthRegPageActivity extends AppCompatActivity {
         editor.putString("token", token);
         editor.apply();
     }
-
-//    public static boolean isValidSNILS(String snils) {
-//        if (snils == null || snils.length() != 11)
-//            return false;
-//
-//        String digitsOnly = snils.replaceAll("[^0-9]", "");
-//        if (digitsOnly.length() != 9)
-//            return false;
-//
-//        int sum = 0;
-//        for (int i = 0; i < 9; i++)
-//            sum += Integer.parseInt(digitsOnly.substring(i, i + 1)) * (9 - i);
-//
-//        int checkDigit = 0;
-//        if (sum < 100)
-//            checkDigit = sum;
-//        else if (sum > 101) {
-//            checkDigit = sum % 101;
-//            if (checkDigit == 100)
-//                checkDigit = 0;
-//        }
-//        return checkDigit == Integer.parseInt(digitsOnly.substring(9));
-//    }
 }
