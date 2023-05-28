@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
-from doctors.models import Treatment
+from doctors.models import Treatment, PatientDoctor
 
 
 class Patient(models.Model):
@@ -18,6 +18,11 @@ class Patient(models.Model):
 
     class Meta:
         db_table = 'patient'
+
+    @property
+    def treatment_start(self):
+        created_at = PatientDoctor.objects.get(patient=self).created_at
+        return created_at
 
 
 class Measurement(models.Model):
