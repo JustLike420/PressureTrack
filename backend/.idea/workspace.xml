@@ -2,29 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3c6eea22-856f-4426-a255-0a04d1e35b60" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/backends.py" beforeDir="false" afterPath="$PROJECT_DIR$/accounts/backends.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/accounts/migrations/0001_initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/accounts/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/accounts/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/accounts/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/accounts/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/accounts/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/accounts/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admins/management/commands/initadmin.py" beforeDir="false" afterPath="$PROJECT_DIR$/admins/management/commands/initadmin.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/doctors/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/doctors/migrations/0001_initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/doctors/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/doctors/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/doctors/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/doctors/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/doctors/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/doctors/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/doctors/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/doctors/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/patients/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/patients/migrations/0001_initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/patients/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/patients/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/patients/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/patients/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/patients/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/patients/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/patients/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/patients/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/poetry.lock" beforeDir="false" afterPath="$PROJECT_DIR$/poetry.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobile/PatientApp/app/src/main/java/ru/mirea/zhalyaletdinov_f_n/pressuretrackforpatients/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/PatientApp/app/src/main/java/ru/mirea/zhalyaletdinov_f_n/pressuretrackforpatients/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobile/PatientApp/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/PatientApp/app/src/main/res/layout/activity_main.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

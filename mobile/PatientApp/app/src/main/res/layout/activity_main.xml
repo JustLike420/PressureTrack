@@ -140,7 +140,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
-                        <com.github.mikephil.charting.charts.BarChart
+                        <com.github.mikephil.charting.charts.LineChart
                             android:layout_width="match_parent"
                             android:layout_height="163dp"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -149,7 +149,7 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <EditText
-                            android:id="@+id/editTextDate"
+                            android:id="@+id/beginDateET"
                             android:layout_width="140.5dp"
                             android:layout_height="32dp"
                             android:layout_gravity="center"
@@ -165,7 +165,7 @@
                             app:layout_constraintStart_toStartOf="parent" />
 
                         <EditText
-                            android:id="@+id/editTextDate2"
+                            android:id="@+id/endDateET"
                             android:layout_width="140.5dp"
                             android:layout_height="32dp"
                             android:layout_gravity="center"
@@ -189,8 +189,8 @@
                             android:text="@string/DateRange"
                             android:textSize="14sp"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/editTextDate2"
-                            app:layout_constraintStart_toEndOf="@+id/editTextDate" />
+                            app:layout_constraintEnd_toStartOf="@+id/endDateET"
+                            app:layout_constraintStart_toEndOf="@+id/beginDateET" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <TextView

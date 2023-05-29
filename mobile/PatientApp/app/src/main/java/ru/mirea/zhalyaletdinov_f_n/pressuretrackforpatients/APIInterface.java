@@ -30,4 +30,7 @@ public interface APIInterface {
 
     @GET("patient/treatments/")
     Call<List<Treatment>> getTreatment(@Header("Authorization") String token);
+
+    @GET("patient/measurements/")
+    Call<List<GetMeasurment>> getMeasList(@Header("Authorization") String token);
 }

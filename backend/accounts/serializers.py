@@ -1,8 +1,7 @@
 from django.db import transaction
 from djoser.serializers import UserCreateSerializer
-from rest_framework import serializers, status
-from rest_framework.response import Response
-
+from rest_framework import serializers
+from djoser.conf import settings
 from .models import CustomUser
 from patients.models import Patient
 from doctors.models import Doctor, PatientDoctor
@@ -35,3 +34,23 @@ class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
         fields = ('first_name', 'last_name', 'phone')
+
+
+
+
+
+class TokenSerializer(serializers.ModelSerializer):
+    auth_token = serializers.CharField(source="key")
+    user_role = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model = settings.TOKEN_MODEL
+        fields = ("auth_token", "user_role")
+
+    def get_user_role(self, obj):
+        if Patient.objects.filter(user=obj.user) is not None:
+            return "patient"
+        elif Doctor.objects.filter(user=obj.user) is not None:
+            return "doctor"
+        else:
+            return "undefined"

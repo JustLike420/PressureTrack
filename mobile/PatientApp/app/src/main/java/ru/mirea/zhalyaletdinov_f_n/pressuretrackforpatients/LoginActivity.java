@@ -1,47 +1,32 @@
 package ru.mirea.zhalyaletdinov_f_n.pressuretrackforpatients;
 
-import static okhttp3.RequestBody.create;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import okhttp3.FormBody;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
+import com.google.android.material.textfield.TextInputEditText;
+
+import java.util.Objects;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import ru.mirea.zhalyaletdinov_f_n.pressuretrackforpatients.databinding.ActivityLoginBinding;
 
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-
-import com.google.android.material.textfield.TextInputEditText;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.util.Objects;
-
 public class LoginActivity extends AppCompatActivity {
-
     APIInterface apiInterface;
     private ActivityLoginBinding binding;
-    Button loginButton, registerButton;
-    TextInputEditText loginTV;
-    EditText passwordTV;
+     Button loginButton, registerButton;
+     TextInputEditText loginTV;
+     EditText passwordTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,13 +51,27 @@ public class LoginActivity extends AppCompatActivity {
                 public void onResponse(@NonNull Call<LoginResponse> call, @NonNull Response<LoginResponse> response) {
                     if (response.isSuccessful()) {
                         LoginResponse responseBody = response.body();
-                        String token = responseBody.getAuthToken();
-                        Log.d("Token", token);
-                        saveTokenToSharedPreferences(token);
-                        System.out.println(token);
-                        Intent LoginIntent = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(LoginIntent);
-                        finish();
+                        System.out.println(response.body().toString());
+                        String user_role = response.body().getUserRole();
+                        if (!user_role.equals("patient")) {
+                            runOnUiThread(() -> {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this, R.style.MyAlertDialog);
+                                builder.setTitle("Неверные данные");
+                                builder.setMessage("Неправильный номер телефона/email или пароль");
+                                builder.setPositiveButton("ОК", (dialog, which) -> {});
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
+                            });
+                        } else {
+                            String token = responseBody.getAuthToken();
+                            Log.d("Token", token);
+                            saveTokenToSharedPreferences(token);
+                            runOnUiThread(() -> {
+                                Intent LoginIntent = new Intent(LoginActivity.this, MainActivity.class);
+                                startActivity(LoginIntent);
+                                finish();
+                            });
+                        }
                     } else {
                         runOnUiThread(() -> {
                             AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this, R.style.MyAlertDialog);
