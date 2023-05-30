@@ -38,7 +38,7 @@ public class AddRecordActivity extends AppCompatActivity {
         token = sharedPreferences.getString("token", "");
 
         pressET = binding.pressET;
-        commentET = binding.pressET;
+        commentET = binding.commentET;
         newRecButton = binding.newRecButton;
 
         newRecButton.setOnClickListener(view -> {
