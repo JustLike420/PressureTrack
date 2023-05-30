@@ -65,42 +65,7 @@ public class MainActivity extends AppCompatActivity {
         getMeasurementList(token);
 
         logoutButton = binding.logoutButton;
-        logoutButton.setOnClickListener(view -> {
-            apiInterface = APIClient.getClient().create(APIInterface.class);
-            Call<Void> call = apiInterface.logout("Token " + token);
-            call.enqueue(new Callback<Void>() {
-                @Override
-                public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
-                    if (response.isSuccessful()) {
-                        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString("token", "");
-                        editor.apply();
-
-                        runOnUiThread(() -> {
-                            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                            startActivity(intent);
-                            finish();
-                        });
-                    } else {
-                        runOnUiThread(() -> {
-                            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.MyAlertDialog);
-                            builder.setTitle("Неверные данные");
-                            builder.setMessage("Неправильный номер телефона/email или пароль");
-                            builder.setPositiveButton("ОК", (dialog, which) -> {});
-                            AlertDialog dialog = builder.create();
-                            dialog.show();
-                            Log.e("Response", response.toString());
-                        });
-                    }
-                }
-
-                @Override
-                public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
-                    call.cancel();
-                }
-            });
-        });
+        logoutButton.setOnClickListener(view -> logoutProcess(token));
 
         addRecordButton = binding.addRecordButton;
         addRecordButton.setOnClickListener(view -> {
@@ -133,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<PatientProfile>() {
             @Override
             public void onResponse(@NonNull Call<PatientProfile> call, @NonNull Response<PatientProfile> response) {
-                if (response.isSuccessful()){
+                if (response.code() == 200){
                     patientProfile = response.body();
                     assert patientProfile != null;
                     String name = patientProfile.getUser().getFirstName();
@@ -141,27 +106,63 @@ public class MainActivity extends AppCompatActivity {
                     String device = patientProfile.getDevice();
 
                     runOnUiThread(() -> {
-                        String text = "Добрый день,\n" + name + " " + last_name;
+                        String text = "Добрый день,\n" + last_name + " " + name;
                         binding.welcomeLabel.setText(text);
                         binding.deviceModelLabel.setText(device);
                     });
-
-
-                } else {
+                } else if (response.code() == 400) {
                     runOnUiThread(() -> {
                         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.MyAlertDialog);
-                        builder.setTitle("Неверные данные");
-                        builder.setMessage("Неправильный номер телефона/email или пароль");
+                        builder.setTitle("Ошибка");
+                        builder.setMessage("Не удалось получить данные о Вашем профиле");
                         builder.setPositiveButton("ОК", (dialog, which) -> {});
                         AlertDialog dialog = builder.create();
                         dialog.show();
                         Log.e("Response", response.toString());
+                    });
+                } else if (response.code() == 401) {
+                    runOnUiThread(() -> {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.MyAlertDialog);
+                        builder.setTitle("Ошибка аутентификации");
+                        builder.setMessage("Неправильный токен аутентификации");
+                        builder.setPositiveButton("ОК", (dialog, which) -> {});
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    });
+                } else if (response.code() == 500) {
+                    runOnUiThread(() -> {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.MyAlertDialog);
+                        builder.setTitle("Внутренняя ошибка сервера");
+                        builder.setMessage("Произошла внутренняя ошибка сервера. Попробуй позже.");
+                        builder.setPositiveButton("ОК", (dialog, which) -> {});
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    });
+                } else {
+                    runOnUiThread(() -> {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.MyAlertDialog);
+                        builder.setTitle("Ошибка сервера");
+                        builder.setMessage("Произошла ошибка при обращении к серверу.");
+                        builder.setPositiveButton("ОК", (dialog, which) -> {});
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
                     });
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<PatientProfile> call, @NonNull Throwable t) {
+                runOnUiThread(() -> {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.MyAlertDialog);
+                    builder.setTitle("Ошибка");
+                    builder.setMessage("Не удалось выполнить операцию. Пожалуйста, проверьте подключение к сети.");
+                    builder.setPositiveButton("ОК", (dialog, which) -> {});
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                });
                 call.cancel();
             }
         });
@@ -177,17 +178,65 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<List<Treatment>>() {
             @Override
             public void onResponse(@NonNull Call<List<Treatment>> call, @NonNull Response<List<Treatment>> response) {
-                if (response.isSuccessful()) {
+                if (response.code() == 200) {
                     List<Treatment> list_treatment = response.body();
                     assert list_treatment != null;
                     Treatment treatment = list_treatment.get(0);
                     String message = treatment.getMessage();
                     runOnUiThread(() -> binding.treatmentText.setText(message));
+                } else if (response.code() == 400) {
+                    runOnUiThread(() -> {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.MyAlertDialog);
+                        builder.setTitle("Ошибка");
+                        builder.setMessage("Не удалось получить данные о назначенном Вам лечении");
+                        builder.setPositiveButton("ОК", (dialog, which) -> {});
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                        Log.e("Response", response.toString());
+                    });
+                } else if (response.code() == 401) {
+                    runOnUiThread(() -> {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.MyAlertDialog);
+                        builder.setTitle("Ошибка аутентификации");
+                        builder.setMessage("Неправильный токен аутентификации");
+                        builder.setPositiveButton("ОК", (dialog, which) -> {});
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    });
+                } else if (response.code() == 500) {
+                    runOnUiThread(() -> {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.MyAlertDialog);
+                        builder.setTitle("Внутренняя ошибка сервера");
+                        builder.setMessage("Произошла внутренняя ошибка сервера. Попробуй позже.");
+                        builder.setPositiveButton("ОК", (dialog, which) -> {});
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    });
+                } else {
+                    runOnUiThread(() -> {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.MyAlertDialog);
+                        builder.setTitle("Ошибка сервера");
+                        builder.setMessage("Произошла ошибка при обращении к серверу.");
+                        builder.setPositiveButton("ОК", (dialog, which) -> {});
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    });
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<List<Treatment>> call, @NonNull Throwable t) {
+                runOnUiThread(() -> {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.MyAlertDialog);
+                    builder.setTitle("Ошибка");
+                    builder.setMessage("Не удалось выполнить операцию. Пожалуйста, проверьте подключение к сети.");
+                    builder.setPositiveButton("ОК", (dialog, which) -> {});
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                });
                 call.cancel();
             }
         });
@@ -203,7 +252,7 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<List<GetMeasurment>>() {
             @Override
             public void onResponse(@NonNull Call<List<GetMeasurment>> call, @NonNull Response<List<GetMeasurment>> response) {
-                if (response.isSuccessful()) {
+                if (response.code() == 200) {
                     List<GetMeasurment> measList, weekMeasList, todayMeasList;
                     measList = response.body();
                     assert measList != null;
@@ -211,11 +260,12 @@ public class MainActivity extends AppCompatActivity {
                     Collections.reverse(weekMeasList);
                     todayMeasList = getMeasurementsWithTodayDate(measList);
                     Collections.reverse(todayMeasList);
+
                     runOnUiThread(() -> {
                         initializeRecyclerView(weekMeasList, todayMeasList);
                         initializeLineChart(weekMeasList);
                     });
-                } else {
+                } else if (response.code() == 400) {
                     runOnUiThread(() -> {
                         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.MyAlertDialog);
                         builder.setTitle("Ошибка");
@@ -225,11 +275,122 @@ public class MainActivity extends AppCompatActivity {
                         dialog.show();
                         Log.e("Response", response.toString());
                     });
+                } else if (response.code() == 401) {
+                    runOnUiThread(() -> {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.MyAlertDialog);
+                        builder.setTitle("Ошибка аутентификации");
+                        builder.setMessage("Неправильный токен аутентификации");
+                        builder.setPositiveButton("ОК", (dialog, which) -> {});
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    });
+                } else if (response.code() == 500) {
+                    runOnUiThread(() -> {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.MyAlertDialog);
+                        builder.setTitle("Внутренняя ошибка сервера");
+                        builder.setMessage("Произошла внутренняя ошибка сервера. Попробуй позже.");
+                        builder.setPositiveButton("ОК", (dialog, which) -> {});
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    });
+                } else {
+                    runOnUiThread(() -> {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.MyAlertDialog);
+                        builder.setTitle("Ошибка сервера");
+                        builder.setMessage("Произошла ошибка при обращении к серверу.");
+                        builder.setPositiveButton("ОК", (dialog, which) -> {});
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    });
                 }
             }
-
             @Override
             public void onFailure(@NonNull Call<List<GetMeasurment>> call, @NonNull Throwable t) {
+                runOnUiThread(() -> {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.MyAlertDialog);
+                    builder.setTitle("Ошибка");
+                    builder.setMessage("Не удалось выполнить операцию. Пожалуйста, проверьте подключение к сети.");
+                    builder.setPositiveButton("ОК", (dialog, which) -> {});
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                });
+                call.cancel();
+            }
+        });
+    }
+
+    private void logoutProcess(String token) {
+        apiInterface = APIClient.getClient().create(APIInterface.class);
+        Call<Void> call = apiInterface.logout("Token " + token);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                if (response.code() == 201) {
+                    SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("token", "");
+                    editor.apply();
+
+                    runOnUiThread(() -> {
+                        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    });
+                } else if (response.code() == 400) {
+                    runOnUiThread(() -> {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.MyAlertDialog);
+                        builder.setTitle("Ошибка");
+                        builder.setMessage("Не удалось покинуть личный кабинет. Попробуйте позже.");
+                        builder.setPositiveButton("ОК", (dialog, which) -> {});
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                        Log.e("Response", response.toString());
+                    });
+                } else if (response.code() == 401) {
+                    runOnUiThread(() -> {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.MyAlertDialog);
+                        builder.setTitle("Ошибка аутентификации");
+                        builder.setMessage("Неправильный токен аутентификации");
+                        builder.setPositiveButton("ОК", (dialog, which) -> {});
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    });
+                } else if (response.code() == 500) {
+                    runOnUiThread(() -> {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.MyAlertDialog);
+                        builder.setTitle("Внутренняя ошибка сервера");
+                        builder.setMessage("Произошла внутренняя ошибка сервера. Попробуй позже.");
+                        builder.setPositiveButton("ОК", (dialog, which) -> {});
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    });
+                } else {
+                    runOnUiThread(() -> {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.MyAlertDialog);
+                        builder.setTitle("Ошибка сервера");
+                        builder.setMessage("Произошла ошибка при обращении к серверу.");
+                        builder.setPositiveButton("ОК", (dialog, which) -> {});
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    });
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+                runOnUiThread(() -> {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.MyAlertDialog);
+                    builder.setTitle("Ошибка");
+                    builder.setMessage("Не удалось выполнить операцию. Пожалуйста, проверьте подключение к сети.");
+                    builder.setPositiveButton("ОК", (dialog, which) -> {});
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                });
                 call.cancel();
             }
         });

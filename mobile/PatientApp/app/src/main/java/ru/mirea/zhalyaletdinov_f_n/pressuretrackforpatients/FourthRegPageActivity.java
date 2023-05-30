@@ -51,8 +51,8 @@ public class FourthRegPageActivity extends AppCompatActivity {
         String surname = getIntent().getStringExtra("Surname");
         String email = getIntent().getStringExtra("Email");
         String password = getIntent().getStringExtra("Password");
-        Float height = getIntent().getFloatExtra("Height", 176);
-        Float weight = getIntent().getFloatExtra("Weight", 60);
+        float height = getIntent().getFloatExtra("Height", 176);
+        float weight = getIntent().getFloatExtra("Weight", 60);
         String model = getIntent().getStringExtra("Model");
 
         regEndButton = binding.regEndButton;
@@ -135,23 +135,48 @@ public class FourthRegPageActivity extends AppCompatActivity {
         call.enqueue(new Callback<CreatePatient>() {
             @Override
             public void onResponse(@NonNull Call<CreatePatient> call, @NonNull Response<CreatePatient> response) {
-                if (response.isSuccessful()) {
+                if (response.code() == 201) {
                     auth(patient);
-                } else {
+                } else if (response.code() == 400) {
                     runOnUiThread(() -> {
                         AlertDialog.Builder builder = new AlertDialog.Builder(FourthRegPageActivity.this, R.style.MyAlertDialog);
-                        builder.setTitle("Неверные данные");
-                        builder.setMessage("Введены неправильные данные при регистрации");
+                        builder.setTitle("Ошибка");
+                        builder.setMessage("Не удалось зарегистрировать.");
                         builder.setPositiveButton("ОК", (dialog, which) -> {});
                         AlertDialog dialog = builder.create();
                         dialog.show();
-                        Log.e("Response", response.toString());
+                    });
+                } else if (response.code() == 500) {
+                    runOnUiThread(() -> {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(FourthRegPageActivity.this, R.style.MyAlertDialog);
+                        builder.setTitle("Внутренняя ошибка сервера");
+                        builder.setMessage("Произошла внутренняя ошибка сервера. Попробуйте позже.");
+                        builder.setPositiveButton("ОК", (dialog, which) -> {});
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    });
+                } else {
+                    runOnUiThread(() -> {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(FourthRegPageActivity.this, R.style.MyAlertDialog);
+                        builder.setTitle("Ошибка сервера");
+                        builder.setMessage("Произошла ошибка при обращении к серверу.");
+                        builder.setPositiveButton("ОК", (dialog, which) -> {});
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
                     });
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<CreatePatient> call, @NonNull Throwable t) {
+                runOnUiThread(() -> {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(FourthRegPageActivity.this, R.style.MyAlertDialog);
+                    builder.setTitle("Ошибка");
+                    builder.setMessage("Не удалось выполнить операцию. Пожалуйста, проверьте подключение к сети.");
+                    builder.setPositiveButton("ОК", (dialog, which) -> {});
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                });
                 call.cancel();
             }
         });
@@ -164,7 +189,7 @@ public class FourthRegPageActivity extends AppCompatActivity {
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(@NonNull Call<LoginResponse> call, @NonNull Response<LoginResponse> response) {
-                if (response.isSuccessful()) {
+                if (response.code() == 201) {
                     LoginResponse responseBody = response.body();
                     String token = responseBody.getAuthToken();
                     Log.d("Token", token);
@@ -176,24 +201,46 @@ public class FourthRegPageActivity extends AppCompatActivity {
                         startActivity(mainIntent);
                         finish();
                     });
-                } else {
+                } else if (response.code() == 400) {
                     runOnUiThread(() -> {
                         AlertDialog.Builder builder = new AlertDialog.Builder(FourthRegPageActivity.this, R.style.MyAlertDialog);
-                        builder.setTitle("Ошибка");
-                        builder.setMessage("Не удалось авторизоваться");
+                        builder.setTitle("Неверные данные");
+                        builder.setMessage("Неправильный номер телефона/email или пароль");
                         builder.setPositiveButton("ОК", (dialog, which) -> {});
                         AlertDialog dialog = builder.create();
                         dialog.show();
-                        Log.e("Response", response.toString());
-                        Intent loginIntent = new Intent(FourthRegPageActivity.this, LoginActivity.class);
-                        startActivity(loginIntent);
-                        finish();
+                    });
+                } else if (response.code() == 500) {
+                    runOnUiThread(() -> {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(FourthRegPageActivity.this, R.style.MyAlertDialog);
+                        builder.setTitle("Внутренняя ошибка сервера");
+                        builder.setMessage("Произошла внутренняя ошибка сервера. Попробуйте позже.");
+                        builder.setPositiveButton("ОК", (dialog, which) -> {});
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    });
+                } else {
+                    runOnUiThread(() -> {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(FourthRegPageActivity.this, R.style.MyAlertDialog);
+                        builder.setTitle("Ошибка сервера");
+                        builder.setMessage("Произошла ошибка при обращении к серверу.");
+                        builder.setPositiveButton("ОК", (dialog, which) -> {});
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
                     });
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<LoginResponse> call, @NonNull Throwable t) {
+                runOnUiThread(() -> {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(FourthRegPageActivity.this, R.style.MyAlertDialog);
+                    builder.setTitle("Ошибка");
+                    builder.setMessage("Не удалось выполнить операцию. Пожалуйста, проверьте подключение к сети.");
+                    builder.setPositiveButton("ОК", (dialog, which) -> {});
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                });
                 call.cancel();
             }
         });

@@ -24,7 +24,6 @@ public class NewTonometrActivity extends AppCompatActivity {
     private Button newModButton;
     private View backView;
     private ImageView backIcon;
-    private String device;
     private String token;
 
     @Override
@@ -46,39 +45,7 @@ public class NewTonometrActivity extends AppCompatActivity {
                 AlertDialog dialog = builder.create();
                 dialog.show();
             } else {
-                apiInterface = APIClient.getClient().create(APIInterface.class);
-                Device deviceObj = new Device(binding.deviceET.getText().toString().trim());
-                Call<PatientProfile> call = apiInterface.changeDevice("Token " + token, deviceObj);
-                call.enqueue(new Callback<PatientProfile>() {
-                    @Override
-                    public void onResponse(@NonNull Call<PatientProfile> call, @NonNull Response<PatientProfile> response) {
-                        Log.d("Body", response.body().toString());
-                        if (response.isSuccessful()) {
-                            finish();
-                        } else {
-                            if (response.code() == 500) {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(NewTonometrActivity.this, R.style.MyAlertDialog);
-                                builder.setTitle("Ошибка");
-                                builder.setMessage("Проблема на стороне сервера. Попробуйте чуть позже.");
-                                builder.setPositiveButton("ОК", (dialog, which) -> {});
-                                AlertDialog dialog = builder.create();
-                                dialog.show();
-                                call.cancel();
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(@NonNull Call<PatientProfile> call, @NonNull Throwable t) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(NewTonometrActivity.this, R.style.MyAlertDialog);
-                        builder.setTitle("Ошибка");
-                        builder.setMessage("Не удалось выполнить запрос. Пожалуйста, проверьте подключение к сети и попробуйте снова.");
-                        builder.setPositiveButton("ОК", (dialog, which) -> {});
-                        AlertDialog dialog = builder.create();
-                        dialog.show();
-                        call.cancel();
-                    }
-                });
+                newTonometrePost(token);
             }
         });
 
@@ -87,5 +54,72 @@ public class NewTonometrActivity extends AppCompatActivity {
         backIcon = binding.backIconT;
         backIcon.setOnClickListener(view -> { finish(); });
         backView.setOnClickListener(view -> { finish(); });
+    }
+
+    private void newTonometrePost(String token) {
+        apiInterface = APIClient.getClient().create(APIInterface.class);
+        Device deviceObj = new Device(binding.deviceET.getText().toString().trim());
+        Call<PatientProfile> call = apiInterface.changeDevice("Token " + token, deviceObj);
+        call.enqueue(new Callback<PatientProfile>() {
+            @Override
+            public void onResponse(@NonNull Call<PatientProfile> call, @NonNull Response<PatientProfile> response) {
+                Log.d("Body", response.body().toString());
+                if (response.code() == 200) {
+                    runOnUiThread(() -> finish());
+                } else if (response.code() == 400) {
+                    runOnUiThread(() -> {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(NewTonometrActivity.this, R.style.MyAlertDialog);
+                        builder.setTitle("Ошибка");
+                        builder.setMessage("Не удалось поменять модель тонометра!");
+                        builder.setPositiveButton("ОК", (dialog, which) -> {});
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    });
+                } else if (response.code() == 401) {
+                    runOnUiThread(() -> {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(NewTonometrActivity.this, R.style.MyAlertDialog);
+                        builder.setTitle("Ошибка аутентификации");
+                        builder.setMessage("Неправильный токен аутентификации");
+                        builder.setPositiveButton("ОК", (dialog, which) -> {});
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                        Intent intent = new Intent(NewTonometrActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    });
+                } else if (response.code() == 500) {
+                    runOnUiThread(() -> {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(NewTonometrActivity.this, R.style.MyAlertDialog);
+                        builder.setTitle("Ошибка");
+                        builder.setMessage("Проблема на стороне сервера. Попробуйте чуть позже.");
+                        builder.setPositiveButton("ОК", (dialog, which) -> {});
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    });
+                } else {
+                    runOnUiThread(() -> {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(NewTonometrActivity.this, R.style.MyAlertDialog);
+                        builder.setTitle("Ошибка сервера");
+                        builder.setMessage("Произошла ошибка при обращении к серверу.");
+                        builder.setPositiveButton("ОК", (dialog, which) -> {});
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<PatientProfile> call, @NonNull Throwable t) {
+                runOnUiThread(() -> {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(NewTonometrActivity.this, R.style.MyAlertDialog);
+                    builder.setTitle("Ошибка");
+                    builder.setMessage("Не удалось выполнить операцию. Пожалуйста, проверьте подключение к сети.");
+                    builder.setPositiveButton("ОК", (dialog, which) -> {});
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                });
+                call.cancel();
+            }
+        });
     }
 }

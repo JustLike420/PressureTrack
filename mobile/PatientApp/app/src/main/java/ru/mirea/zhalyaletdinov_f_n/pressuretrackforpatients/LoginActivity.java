@@ -14,8 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
 
-import java.util.Objects;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -49,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
             call.enqueue(new Callback<LoginResponse>() {
                 @Override
                 public void onResponse(@NonNull Call<LoginResponse> call, @NonNull Response<LoginResponse> response) {
-                    if (response.isSuccessful()) {
+                    if (response.code() == 201) {
                         LoginResponse responseBody = response.body();
                         System.out.println(response.body().toString());
                         String user_role = response.body().getUserRole();
@@ -64,7 +62,6 @@ public class LoginActivity extends AppCompatActivity {
                             });
                         } else {
                             String token = responseBody.getAuthToken();
-                            Log.d("Token", token);
                             saveTokenToSharedPreferences(token);
                             runOnUiThread(() -> {
                                 Intent LoginIntent = new Intent(LoginActivity.this, MainActivity.class);
@@ -72,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
                                 finish();
                             });
                         }
-                    } else {
+                    } else if (response.code() == 400) {
                         runOnUiThread(() -> {
                             AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this, R.style.MyAlertDialog);
                             builder.setTitle("Неверные данные");
@@ -80,7 +77,24 @@ public class LoginActivity extends AppCompatActivity {
                             builder.setPositiveButton("ОК", (dialog, which) -> {});
                             AlertDialog dialog = builder.create();
                             dialog.show();
-                            Log.e("Response", response.toString());
+                        });
+                    } else if (response.code() == 500) {
+                        runOnUiThread(() -> {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this, R.style.MyAlertDialog);
+                            builder.setTitle("Внутренняя ошибка сервера");
+                            builder.setMessage("Произошла внутренняя ошибка сервера. Попробуй позже.");
+                            builder.setPositiveButton("ОК", (dialog, which) -> {});
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
+                        });
+                    } else {
+                        runOnUiThread(() -> {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this, R.style.MyAlertDialog);
+                            builder.setTitle("Ошибка сервера");
+                            builder.setMessage("Произошла ошибка при обращении к серверу.");
+                            builder.setPositiveButton("ОК", (dialog, which) -> {});
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
                         });
                     }
                 }
