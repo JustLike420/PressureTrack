@@ -18,9 +18,6 @@ class CreatePatientView(viewsets.ModelViewSet):
     serializer_class = CreatePatient
 
 
-# class ProfileView(viewsets.ModelViewSet):
-#     serializer_class = CustomUserSerializer
-#     queryset = CustomUser.objects.all()
 class ProfileView(APIView):
     permission_classes = [IsAuthenticated]
 

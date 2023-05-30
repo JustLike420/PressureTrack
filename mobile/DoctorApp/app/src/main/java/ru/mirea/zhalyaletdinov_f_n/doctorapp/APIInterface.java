@@ -11,11 +11,11 @@ public interface APIInterface {
     @POST("accounts/auth/token/login/")
     Call<LoginResponse> performLogin(@Body LoginData loginData);
 
-//    @GET("patient/profile/")
-//    Call<PatientProfile> mainLoader(@Header("Authorization") String token);
-//
-//    @POST("accounts/auth/token/logout/")
-//    Call<Void> logout(@Header("Authorization") String token);
+    @GET("accounts/profile/")
+    Call<AccountProfile> mainLoader(@Header("Authorization") String token);
+
+    @POST("accounts/auth/token/logout/")
+    Call<Void> logout(@Header("Authorization") String token);
 //
 //    @POST("accounts/craete_patient/")
 //    Call<CreatePatient> createPatient(@Body CreatePatient createPatient);

@@ -24,4 +24,4 @@ class AuthBackend(object):
             )
         except User.DoesNotExist:
             return None
-        return user
+        return user if user.check_password(password) else None

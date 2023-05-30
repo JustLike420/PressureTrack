@@ -19,6 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:paddingBottom="40dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -105,7 +106,19 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="16dp"
-                android:paddingBottom="32dp" />
+                android:paddingBottom="32dp" >
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/logoutButton"
+                android:layout_width="343dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="80dp"
+                style="@style/logout_button_label"
+                android:background="@drawable/button_white"
+                android:text="@string/logoutButtonLabel" />
 
         </LinearLayout>
 

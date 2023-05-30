@@ -13,4 +13,6 @@
     <string name="PatName">Patient Name</string>
     <string name="PatPhone">89997776622</string>
     <string name="cureDate">Начало лечения: </string>
+    <string name="noData">—</string>
+    <string name="logoutButtonLabel">Выйти</string>
 </resources>
