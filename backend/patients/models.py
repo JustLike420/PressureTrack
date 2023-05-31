@@ -24,6 +24,11 @@ class Patient(models.Model):
         created_at = PatientDoctor.objects.get(patient=self).created_at
         return created_at
 
+    @property
+    def status(self):
+        created_at = PatientDoctor.objects.get(patient=self).status
+        return created_at
+
 
 class Measurement(models.Model):
     patient = models.ForeignKey(
