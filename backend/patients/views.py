@@ -9,14 +9,19 @@ from doctors.models import Treatment
 from doctors.serializers import TreatmentSerializer
 from patients.models import Measurement, Patient
 from patients.serializers import MeasurementSerializer, PatientSerializer, DeviceSerializer
+from rest_framework.exceptions import NotAuthenticated, server_error
 
 
 class PatientView(APIView):
     permission_classes = [IsAuthenticated]
 
-    @swagger_auto_schema(responses={
-        200: openapi.Response('response description', PatientSerializer)
-    })
+    @swagger_auto_schema(
+        responses={
+            200: openapi.Response('Success', PatientSerializer),
+            401: openapi.Response('Unauthorized'),
+            500: openapi.Response('Internal Server Error'),
+        }
+    )
     def get(self, request):
         queryset = Patient.objects.get(user=self.request.user)
         serializer = PatientSerializer(queryset)
@@ -28,15 +33,25 @@ class DeviceView(APIView):
 
     @swagger_auto_schema(
         request_body=DeviceSerializer,
-        responses={200: openapi.Response('response description', PatientSerializer)}
+        responses={
+            200: openapi.Response('Success'),
+            401: openapi.Response('Unauthorized'),
+            500: openapi.Response('Internal Server Error'),
+        }
     )
     def put(self, request):
-        patient = Patient.objects.get(user=self.request.user)
-        device = request.data.get('device')
-        patient.device = device
-        patient.save()
-        serializer = PatientSerializer(patient)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        if not request.user.is_authenticated:
+            raise NotAuthenticated()
+        try:
+            patient = Patient.objects.get(user=self.request.user)
+            device = request.data.get('device')
+            patient.device = device
+            patient.save()
+            # serializer = PatientSerializer(patient)
+            # return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response(status=status.HTTP_200_OK)
+        except Exception as e:
+            return server_error(request)
 
 
 class MeasurementsView(viewsets.ModelViewSet):
@@ -44,13 +59,42 @@ class MeasurementsView(viewsets.ModelViewSet):
     queryset = Measurement.objects.all()
     serializer_class = MeasurementSerializer
 
-    def perform_create(self, serializer):
-        patient = Patient.objects.get(user=self.request.user)
-        serializer.save(patient=patient)
+    @swagger_auto_schema(
+        responses={
+            201: openapi.Response('Created'),
+            401: openapi.Response('Unauthorized'),
+            500: openapi.Response('Internal Server Error'),
+        }
+    )
+    def create(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            raise NotAuthenticated()
+        try:
+            patient = Patient.objects.get(user=request.user)
+            serializer = self.get_serializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            serializer.save(patient=patient)
+            headers = self.get_success_headers(serializer.data)
+            return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        except Exception as e:
+            return server_error(request)
 
-    def get_queryset(self):
-        q = Measurement.objects.filter(patient=Patient.objects.get(user=self.request.user))
-        return q
+    @swagger_auto_schema(
+        responses={
+            200: openapi.Response('Success', MeasurementSerializer),
+            401: openapi.Response('Unauthorized'),
+            500: openapi.Response('Internal Server Error'),
+        }
+    )
+    def list(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            raise NotAuthenticated()
+        try:
+            queryset = self.filter_queryset(self.get_queryset())
+            serializer = self.get_serializer(queryset, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Exception as e:
+            return server_error(request)
 
 
 class TreatmentsView(viewsets.ModelViewSet):
@@ -58,6 +102,17 @@ class TreatmentsView(viewsets.ModelViewSet):
     queryset = Treatment.objects.all()
     serializer_class = TreatmentSerializer
 
-    def get_queryset(self):
-        q = Treatment.objects.filter(patient=Patient.objects.get(user=self.request.user))
-        return q
+    @swagger_auto_schema(
+        responses={
+            200: openapi.Response('Success', TreatmentSerializer),
+            401: openapi.Response('Unauthorized'),
+            500: openapi.Response('Internal Server Error'),
+        }
+    )
+    def list(self, request):
+        if not request.user.is_authenticated:
+            raise NotAuthenticated()
+        try:
+            return Treatment.objects.filter(patient=Patient.objects.get(user=self.request.user))
+        except Exception as e:
+            return server_error(request)

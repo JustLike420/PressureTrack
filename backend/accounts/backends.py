@@ -4,7 +4,7 @@ from django.db.models import Q
 User = get_user_model()
 
 
-class AuthBackend(object):
+class AuthBackend:
     supports_object_permissions = True
     supports_anonymous_user = True
     supports_inactive_user = True
