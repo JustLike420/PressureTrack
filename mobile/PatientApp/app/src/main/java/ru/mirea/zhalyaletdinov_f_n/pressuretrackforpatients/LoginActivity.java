@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -63,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(@NonNull Call<LoginResponse> call, @NonNull Response<LoginResponse> response) {
-                if (response.code() == 200) {
+                if (response.isSuccessful()) {
                     LoginResponse responseBody = response.body();
                     System.out.println(response.body().toString());
                     String user_role = response.body().getUserRole();

@@ -1,5 +1,14 @@
 package ru.mirea.zhalyaletdinov_f_n.pressuretrackforpatients;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,17 +17,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import ru.mirea.zhalyaletdinov_f_n.pressuretrackforpatients.databinding.ActivityAddRecordBinding;
-
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 
 public class AddRecordActivity extends AppCompatActivity {
 
@@ -55,7 +53,7 @@ public class AddRecordActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
                         System.out.println(response.body());
-                        if (response.code() == 201) {
+                        if (response.isSuccessful()) {
                             runOnUiThread(() -> finish());
                         } else if (response.code() == 400) {
                             runOnUiThread(() -> {
@@ -71,12 +69,13 @@ public class AddRecordActivity extends AppCompatActivity {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(AddRecordActivity.this, R.style.MyAlertDialog);
                                 builder.setTitle("Ошибка аутентификации");
                                 builder.setMessage("Неправильный токен аутентификации");
-                                builder.setPositiveButton("ОК", (dialog, which) -> {});
+                                builder.setPositiveButton("ОК", (dialog, which) -> {
+                                    Intent intent = new Intent(AddRecordActivity.this, LoginActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                });
                                 AlertDialog dialog = builder.create();
                                 dialog.show();
-                                Intent intent = new Intent(AddRecordActivity.this, LoginActivity.class);
-                                startActivity(intent);
-                                finish();
                             });
                         }else if (response.code() == 500) {
                             runOnUiThread(() -> {

@@ -21,6 +21,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.google.android.material.tabs.TabLayout;
+
 public class MainActivity extends AppCompatActivity {
 
     APIInterface apiInterface;
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private Button logoutButton;
     RecyclerView recyclerView;
+    private TabLayout tabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,10 +44,35 @@ public class MainActivity extends AppCompatActivity {
 
         mainloader(token);
 
-        logoutButton = binding.logoutButton;
-        logoutButton.setOnClickListener(view -> {
-            performLogout(token);
+        tabLayout = binding.tabLayout;
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                switch (tab.getPosition()) {
+                    case 0:
+                        initializeActivePatients(token);
+                        break;
+                    case 1:
+                        initializeArchivedPatients(token);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
         });
+
+        logoutButton = binding.logoutButton;
+        logoutButton.setOnClickListener(view -> performLogout(token));
 
         recyclerView = binding.rvMain;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -57,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<AccountProfile>() {
             @Override
             public void onResponse(Call<AccountProfile> call, Response<AccountProfile> response) {
-                if (response.code() == 200) {
+                if (response.isSuccessful()) {
                     AccountProfile accountProfile = response.body();
                     assert accountProfile != null;
                     String name = accountProfile.getName();
@@ -128,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
-                if (response.code() == 204) {
+                if (response.isSuccessful()) {
                     SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("doctor_token", "");
@@ -196,9 +224,16 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void initializeActivePatients(String token) {
+    }
+
+    private void initializeArchivedPatients(String token) {
+    }
+
     static class PatientCardHolder extends RecyclerView.ViewHolder {
         public PatientCardHolder(@NonNull View itemView) {
             super(itemView);
+            
         }
     }
 

@@ -1,15 +1,6 @@
 package ru.mirea.zhalyaletdinov_f_n.pressuretrackforpatients;
 
 import android.content.Context;
-import android.content.DialogInterface;
-
-import okhttp3.Request;
-import okio.Timeout;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import ru.mirea.zhalyaletdinov_f_n.pressuretrackforpatients.databinding.FourthRegPageBinding;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -26,7 +17,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.IOException;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import ru.mirea.zhalyaletdinov_f_n.pressuretrackforpatients.databinding.FourthRegPageBinding;
 
 public class FourthRegPageActivity extends AppCompatActivity {
 
@@ -135,7 +129,7 @@ public class FourthRegPageActivity extends AppCompatActivity {
         call.enqueue(new Callback<CreatePatient>() {
             @Override
             public void onResponse(@NonNull Call<CreatePatient> call, @NonNull Response<CreatePatient> response) {
-                if (response.code() == 201) {
+                if (response.isSuccessful()) {
                     auth(patient);
                 } else if (response.code() == 400) {
                     runOnUiThread(() -> {
@@ -189,7 +183,7 @@ public class FourthRegPageActivity extends AppCompatActivity {
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(@NonNull Call<LoginResponse> call, @NonNull Response<LoginResponse> response) {
-                if (response.code() == 201) {
+                if (response.isSuccessful()) {
                     LoginResponse responseBody = response.body();
                     String token = responseBody.getAuthToken();
                     Log.d("Token", token);

@@ -2,24 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3c6eea22-856f-4426-a255-0a04d1e35b60" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/backends.py" beforeDir="false" afterPath="$PROJECT_DIR$/accounts/backends.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/accounts/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/accounts/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/DoctorApp/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/DoctorApp/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/DoctorApp/app/src/main/java/ru/mirea/zhalyaletdinov_f_n/doctorapp/APIInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/DoctorApp/app/src/main/java/ru/mirea/zhalyaletdinov_f_n/doctorapp/APIInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/DoctorApp/app/src/main/java/ru/mirea/zhalyaletdinov_f_n/doctorapp/LoaderActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/DoctorApp/app/src/main/java/ru/mirea/zhalyaletdinov_f_n/doctorapp/LoaderActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../mobile/DoctorApp/app/src/main/java/ru/mirea/zhalyaletdinov_f_n/doctorapp/LoginActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/DoctorApp/app/src/main/java/ru/mirea/zhalyaletdinov_f_n/doctorapp/LoginActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/DoctorApp/app/src/main/java/ru/mirea/zhalyaletdinov_f_n/doctorapp/LoginResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/DoctorApp/app/src/main/java/ru/mirea/zhalyaletdinov_f_n/doctorapp/LoginResponse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../mobile/DoctorApp/app/src/main/java/ru/mirea/zhalyaletdinov_f_n/doctorapp/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/DoctorApp/app/src/main/java/ru/mirea/zhalyaletdinov_f_n/doctorapp/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/DoctorApp/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/DoctorApp/app/src/main/res/layout/activity_main.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/DoctorApp/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/DoctorApp/app/src/main/res/values/strings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/DoctorApp/app/src/main/res/values/styles.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/DoctorApp/app/src/main/res/values/styles.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/PatientApp/.idea/deploymentTargetDropDown.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobile/PatientApp/app/src/main/java/ru/mirea/zhalyaletdinov_f_n/pressuretrackforpatients/AddRecordActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/PatientApp/app/src/main/java/ru/mirea/zhalyaletdinov_f_n/pressuretrackforpatients/AddRecordActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobile/PatientApp/app/src/main/java/ru/mirea/zhalyaletdinov_f_n/pressuretrackforpatients/FourthRegPageActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/PatientApp/app/src/main/java/ru/mirea/zhalyaletdinov_f_n/pressuretrackforpatients/FourthRegPageActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../mobile/PatientApp/app/src/main/java/ru/mirea/zhalyaletdinov_f_n/pressuretrackforpatients/LoginActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/PatientApp/app/src/main/java/ru/mirea/zhalyaletdinov_f_n/pressuretrackforpatients/LoginActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/PatientApp/app/src/main/java/ru/mirea/zhalyaletdinov_f_n/pressuretrackforpatients/LoginResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/PatientApp/app/src/main/java/ru/mirea/zhalyaletdinov_f_n/pressuretrackforpatients/LoginResponse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../mobile/PatientApp/app/src/main/java/ru/mirea/zhalyaletdinov_f_n/pressuretrackforpatients/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/PatientApp/app/src/main/java/ru/mirea/zhalyaletdinov_f_n/pressuretrackforpatients/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobile/PatientApp/app/src/main/java/ru/mirea/zhalyaletdinov_f_n/pressuretrackforpatients/NewTonometrActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/PatientApp/app/src/main/java/ru/mirea/zhalyaletdinov_f_n/pressuretrackforpatients/NewTonometrActivity.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

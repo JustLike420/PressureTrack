@@ -64,7 +64,7 @@ public class NewTonometrActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<PatientProfile> call, @NonNull Response<PatientProfile> response) {
                 Log.d("Body", response.body().toString());
-                if (response.code() == 200) {
+                if (response.isSuccessful()) {
                     runOnUiThread(() -> finish());
                 } else if (response.code() == 400) {
                     runOnUiThread(() -> {
@@ -80,12 +80,13 @@ public class NewTonometrActivity extends AppCompatActivity {
                         AlertDialog.Builder builder = new AlertDialog.Builder(NewTonometrActivity.this, R.style.MyAlertDialog);
                         builder.setTitle("Ошибка аутентификации");
                         builder.setMessage("Неправильный токен аутентификации");
-                        builder.setPositiveButton("ОК", (dialog, which) -> {});
+                        builder.setPositiveButton("ОК", (dialog, which) -> {
+                            Intent intent = new Intent(NewTonometrActivity.this, LoginActivity.class);
+                            startActivity(intent);
+                            finish();
+                        });
                         AlertDialog dialog = builder.create();
                         dialog.show();
-                        Intent intent = new Intent(NewTonometrActivity.this, LoginActivity.class);
-                        startActivity(intent);
-                        finish();
                     });
                 } else if (response.code() == 500) {
                     runOnUiThread(() -> {

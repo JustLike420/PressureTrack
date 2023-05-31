@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<PatientProfile>() {
             @Override
             public void onResponse(@NonNull Call<PatientProfile> call, @NonNull Response<PatientProfile> response) {
-                if (response.code() == 200){
+                if (response.isSuccessful()){
                     patientProfile = response.body();
                     assert patientProfile != null;
                     String name = patientProfile.getUser().getFirstName();
@@ -125,12 +125,13 @@ public class MainActivity extends AppCompatActivity {
                         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.MyAlertDialog);
                         builder.setTitle("Ошибка аутентификации");
                         builder.setMessage("Неправильный токен аутентификации");
-                        builder.setPositiveButton("ОК", (dialog, which) -> {});
+                        builder.setPositiveButton("ОК", (dialog, which) -> {
+                            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                            startActivity(intent);
+                            finish();
+                        });
                         AlertDialog dialog = builder.create();
                         dialog.show();
-                        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                        startActivity(intent);
-                        finish();
                     });
                 } else if (response.code() == 500) {
                     runOnUiThread(() -> {
@@ -178,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<List<Treatment>>() {
             @Override
             public void onResponse(@NonNull Call<List<Treatment>> call, @NonNull Response<List<Treatment>> response) {
-                if (response.code() == 200) {
+                if (response.isSuccessful()) {
                     List<Treatment> list_treatment = response.body();
                     assert list_treatment != null;
                     Treatment treatment = list_treatment.get(0);
@@ -199,12 +200,13 @@ public class MainActivity extends AppCompatActivity {
                         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.MyAlertDialog);
                         builder.setTitle("Ошибка аутентификации");
                         builder.setMessage("Неправильный токен аутентификации");
-                        builder.setPositiveButton("ОК", (dialog, which) -> {});
+                        builder.setPositiveButton("ОК", (dialog, which) -> {
+                            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                            startActivity(intent);
+                            finish();
+                        });
                         AlertDialog dialog = builder.create();
                         dialog.show();
-                        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                        startActivity(intent);
-                        finish();
                     });
                 } else if (response.code() == 500) {
                     runOnUiThread(() -> {
@@ -252,7 +254,7 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<List<GetMeasurment>>() {
             @Override
             public void onResponse(@NonNull Call<List<GetMeasurment>> call, @NonNull Response<List<GetMeasurment>> response) {
-                if (response.code() == 200) {
+                if (response.isSuccessful()) {
                     List<GetMeasurment> measList, weekMeasList, todayMeasList;
                     measList = response.body();
                     assert measList != null;
@@ -280,12 +282,13 @@ public class MainActivity extends AppCompatActivity {
                         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.MyAlertDialog);
                         builder.setTitle("Ошибка аутентификации");
                         builder.setMessage("Неправильный токен аутентификации");
-                        builder.setPositiveButton("ОК", (dialog, which) -> {});
+                        builder.setPositiveButton("ОК", (dialog, which) -> {
+                            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                            startActivity(intent);
+                            finish();
+                        });
                         AlertDialog dialog = builder.create();
                         dialog.show();
-                        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                        startActivity(intent);
-                        finish();
                     });
                 } else if (response.code() == 500) {
                     runOnUiThread(() -> {
@@ -328,7 +331,7 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
-                if (response.code() == 204) {
+                if (response.isSuccessful()) {
                     SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("token", "");
@@ -354,12 +357,13 @@ public class MainActivity extends AppCompatActivity {
                         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.MyAlertDialog);
                         builder.setTitle("Ошибка аутентификации");
                         builder.setMessage("Неправильный токен аутентификации");
-                        builder.setPositiveButton("ОК", (dialog, which) -> {});
+                        builder.setPositiveButton("ОК", (dialog, which) -> {
+                            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                            startActivity(intent);
+                            finish();
+                        });
                         AlertDialog dialog = builder.create();
                         dialog.show();
-                        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                        startActivity(intent);
-                        finish();
                     });
                 } else if (response.code() == 500) {
                     runOnUiThread(() -> {
