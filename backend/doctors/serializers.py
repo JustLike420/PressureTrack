@@ -1,8 +1,7 @@
 from rest_framework import serializers
-
 from accounts.serializers import CustomUserSerializer
 from patients.models import Patient
-from .models import Treatment, PatientDoctor
+from .models import Treatment
 
 
 class TreatmentListSerializer(serializers.ModelSerializer):
@@ -14,7 +13,6 @@ class TreatmentListSerializer(serializers.ModelSerializer):
 
 
 class TreatmentCreateSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Treatment
         fields = ('message',)
@@ -33,4 +31,4 @@ class DoctorPatientDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Patient
-        fields = ('user', 'height', 'weight', 'device', 'treatment_start')
+        fields = ('user', 'height', 'weight', 'device', 'treatment_start', 'status')

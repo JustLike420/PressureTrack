@@ -138,6 +138,4 @@
         <item name="android:gravity">top</item>
         <item name="android:translationY">-0.6sp</item>
     </style>
-
-
 </resources>

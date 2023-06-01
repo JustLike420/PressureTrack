@@ -15,4 +15,20 @@
     <string name="cureDate">Начало лечения: </string>
     <string name="noData">—</string>
     <string name="logoutButtonLabel">Выйти</string>
+    <string name="PatientActivityLabel">Пациент</string>
+    <string name="FirstTabLabel">Информация</string>
+    <string name="SecondTabLabel">Хронология</string>
+    <string name="patientNameLabel">[Имя пациента]</string>
+    <string name="patientPhoneNumber">[Номер телефона]</string>
+    <string name="cureDateLabel">Начало лечения:</string>
+    <string name="paramsLabelString">Рост:\nВес:\nТонометр:</string>
+    <string name="DateRange">—</string>
+    <string name="GraphLabel">График замеров</string>
+    <string name="TodayCardsLabel">За сегодня</string>
+    <string name="onWeekLabel">За неделю</string>
+    <string name="archiveButtonLabel">Заархивировать</string>
+    <string name="chronoButtonLabel">Хронология</string>
+    <string name="newTreatButtonLabel">Скорректировать лечение</string>
+    <string name="chronoCardDate">Дата записи</string>
+    <string name="treatmentCardLabel">Лечение</string>
 </resources>

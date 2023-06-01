@@ -20,13 +20,14 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingBottom="40dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout2"
                 android:layout_width="match_parent"
-                android:layout_height="114dp" >
+                android:layout_height="114dp">
 
                 <TextView
                     android:id="@+id/docnameTV"
@@ -51,9 +52,9 @@
                     android:id="@+id/tabLayout"
                     android:layout_width="174dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="3"
                     app:tabTextAppearance="@style/TabItem"
-                    app:tabTextColor="#1D1D1D"
-                    android:layout_weight="3">
+                    app:tabTextColor="#1D1D1D">
 
                     <com.google.android.material.tabs.TabItem
                         android:layout_width="100dp"
@@ -84,20 +85,20 @@
             </LinearLayout>
 
             <EditText
+                style="@style/searchViewText"
                 android:layout_width="377dp"
                 android:layout_height="40dp"
-                android:layout_marginTop="12dp"
                 android:layout_gravity="center"
-                android:hint="@string/SearchHint"
-                style="@style/searchViewText"
+                android:layout_marginTop="12dp"
                 android:alpha="0.4"
+                android:autofillHints=""
+                android:background="@drawable/search"
                 android:drawableStart="@drawable/union"
                 android:drawablePadding="14dp"
-                android:paddingStart="14dp"
-                android:background="@drawable/search"
                 android:gravity="center_vertical"
-                android:autofillHints=""
+                android:hint="@string/SearchHint"
                 android:inputType="text"
+                android:paddingStart="14dp"
                 tools:ignore="RtlSymmetry" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -106,17 +107,17 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="16dp"
-                android:paddingBottom="32dp" >
+                android:paddingBottom="32dp">
 
             </androidx.recyclerview.widget.RecyclerView>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/logoutButton"
+                style="@style/logout_button_label"
                 android:layout_width="343dp"
                 android:layout_height="48dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="80dp"
-                style="@style/logout_button_label"
                 android:background="@drawable/button_white"
                 android:text="@string/logoutButtonLabel" />
 

@@ -371,8 +371,90 @@ public class MainActivity extends AppCompatActivity {
         PatientCardAdapter adapter = new PatientCardAdapter(patientCardList);
         adapter.setOnItemClickListener(data -> {
             String pk = data.pk;
+            stepIntoPatientProfile(token, pk);
         });
-        recyclerView.setAdapter(new PatientCardAdapter(patientCardList));
+        recyclerView.setAdapter(adapter);
+    }
+
+    private void stepIntoPatientProfile(String token, String pk) {
+        apiInterface = APIClient.getClient().create(APIInterface.class);
+        Call<PatientInfo> call = apiInterface.getPatientInfo("Token " + token, pk);
+        call.enqueue(new Callback<PatientInfo>() {
+            @Override
+            public void onResponse(@NonNull Call<PatientInfo> call, @NonNull Response<PatientInfo> response) {
+                if (response.isSuccessful()) {
+                    runOnUiThread(() -> {
+                        PatientInfo patientInfo = response.body();
+                        Intent intent;
+                        assert patientInfo != null;
+                        if (patientInfo.getStatus().equals("true")) {
+                            intent = new Intent(MainActivity.this, ActivePatientActivity.class);
+                            intent.putExtra("PatientInfo", patientInfo);
+                            intent.putExtra("PK", pk);
+                            startActivity(intent);
+                        } else if (patientInfo.getStatus().equals("false")) {
+                            intent = new Intent(MainActivity.this, ArchivedPatientActivity.class);
+                            intent.putExtra("PatientInfo", patientInfo);
+                            intent.putExtra("PK", pk);
+                            startActivity(intent);
+                        }
+                    });
+                } else if (response.code() == 400) {
+                    runOnUiThread(() -> {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.MyAlertDialog);
+                        builder.setTitle("Ошибка");
+                        builder.setMessage("Не получить данные пациента. Попробуйте позже.");
+                        builder.setPositiveButton("ОК", (dialog, which) -> {});
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    });
+                } else if (response.code() == 401) {
+                    runOnUiThread(() -> {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.MyAlertDialog);
+                        builder.setTitle("Ошибка аутентификации");
+                        builder.setMessage("Неправильный токен аутентификации");
+                        builder.setPositiveButton("ОК", (dialog, which) -> {
+                            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                            startActivity(intent);
+                            finish();
+                        });
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    });
+                } else if (response.code() == 500) {
+                    runOnUiThread(() -> {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.MyAlertDialog);
+                        builder.setTitle("Внутренняя ошибка сервера");
+                        builder.setMessage("Произошла внутренняя ошибка сервера. Попробуй позже.");
+                        builder.setPositiveButton("ОК", (dialog, which) -> {});
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    });
+                } else {
+                    runOnUiThread(() -> {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.MyAlertDialog);
+                        builder.setTitle("Ошибка сервера");
+                        builder.setMessage("Произошла ошибка при обращении к серверу.");
+                        builder.setPositiveButton("ОК", (dialog, which) -> {});
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<PatientInfo> call, @NonNull Throwable t) {
+                runOnUiThread(() -> {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.MyAlertDialog);
+                    builder.setTitle("Ошибка");
+                    builder.setMessage("Не удалось выполнить операцию. Пожалуйста, проверьте подключение к сети.");
+                    builder.setPositiveButton("ОК", (dialog, which) -> {});
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                });
+                call.cancel();
+            }
+        });
     }
 
     static class PatientCardHolder extends RecyclerView.ViewHolder {
@@ -417,7 +499,7 @@ public class MainActivity extends AppCompatActivity {
             DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'");
             DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
             LocalDateTime dateTime = LocalDateTime.parse(dateString, inputFormatter);
-            String formattedTime = dateTime.format(outputFormatter);
+            String formattedTime = "Начало лечения: " + dateTime.format(outputFormatter);
             patientCardHolder.cureDate.setText(formattedTime);
 
             patientCardHolder.itemView.setOnClickListener(view -> {

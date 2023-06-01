@@ -8,6 +8,8 @@ import retrofit2.http.Header;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Part;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface APIInterface {
@@ -23,5 +25,18 @@ public interface APIInterface {
     @GET("doctor/patients/")
     Call<List<PatientCard>> getPatientList(@Header("Authorization") String token, @Query("status") String status);
 
+    @GET("doctor/patients/{id}")
+    Call<PatientInfo> getPatientInfo(@Header("Authorization") String token, @Path("id") String pk);
 
+    @GET("doctor/measurements/{id}")
+    Call<List<GetMeasurment>> getMeasList(@Header("Authorization") String token, @Path("id") String pk);
+
+    @PUT("doctor/change_status/{id}")
+    Call<Void> archivePatient(@Header("Authorization") String token, @Path("id") String pk);
+
+    @POST("doctor/treatments/{id}")
+    Call<TreatmentData> createTreatment(@Header("Authorization") String token, @Body TreatmentData treatmentData);
+
+    // @GET("doctor/treatments/{id}")
+    // Call<TreatmentData> createTreatment(@Header("Authorization") String token, @Body TreatmentData treatmentData);
 }

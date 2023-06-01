@@ -35,7 +35,7 @@
         <item name="android:textSize">32sp</item>
         <item name="android:letterSpacing">-0.02</item>
         <item name="android:textColor">#1D1D1D</item>
-        <item name="fontFamily">@font/inter</item>
+        <item name="android:fontFamily">@font/inter</item>
         <item name="android:textStyle">bold</item>
     </style>
 
@@ -43,7 +43,7 @@
         <item name="android:textSize">24sp</item>
         <item name="android:letterSpacing">-0.02</item>
         <item name="android:textColor">#1D1D1D</item>
-        <item name="fontFamily">@font/inter</item>
+        <item name="android:fontFamily">@font/inter</item>
         <item name="android:textStyle">bold</item>
     </style>
 
@@ -51,25 +51,41 @@
         <item name="android:textSize">18sp</item>
         <item name="android:letterSpacing">-0.02</item>
         <item name="android:textColor">#1D1D1D</item>
+        <item name="android:fontFamily">@font/inter</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="tabFont" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
+        <item name="android:textAllCaps">false</item>
         <item name="fontFamily">@font/inter</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:letterSpacing">-0.02</item>
     </style>
 
     <style name="phone_display">
         <item name="android:textSize">15sp</item>
         <item name="android:letterSpacing">-0.02</item>
         <item name="android:textColor">#0082FF</item>
-        <item name="fontFamily">@font/inter</item>
+        <item name="android:fontFamily">@font/inter</item>
     </style>
 
-    <style name="placeholder">
+    <style name="description">
+        <item name="android:textSize">16sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="android:textColor">#646978</item>
+        <item name="android:fontFamily">@font/inter</item>
+    </style>
+
+    <style name="placeholder" parent="@style/TextAppearance.AppCompat">
         <item name="android:textSize">16sp</item>
         <item name="android:letterSpacing">-0.01</item>
-        <item name="android:textColorHint">#646978</item>
-        <item name="fontFamily">@font/inter</item>
+        <item name="android:textColor">#1D1D1D</item>
+        <item name="android:fontFamily">@font/inter</item>
         <item name="android:paddingHorizontal">14dp</item>
         <item name="android:gravity">center_vertical</item>
-        <item name="android:textColor">#000000</item>
+        <item name="hintTextColor">#646978</item>
         <item name="android:alpha">0.6</item>
     </style>
 
@@ -77,8 +93,17 @@
         <item name="android:textSize">16sp</item>
         <item name="android:letterSpacing">0.01</item>
         <item name="android:textColor">#FFFFFF</item>
-        <item name="fontFamily">@font/inter</item>
-        <item name="textAllCaps">false</item>
+        <item name="android:fontFamily">@font/inter</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="white_button_label">
+        <item name="android:textSize">16sp</item>
+        <item name="android:letterSpacing">0.01</item>
+        <item name="android:textColor">#1D1D1D</item>
+        <item name="android:fontFamily">@font/inter</item>
+        <item name="android:textAllCaps">false</item>
         <item name="android:textStyle">bold</item>
     </style>
 
@@ -94,7 +119,7 @@
     <style name="grey_click_TV">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">#646978</item>
-        <item name="fontFamily">@font/inter</item>
+        <item name="android:fontFamily">@font/inter</item>
         <item name="android:gravity">center_horizontal|center_vertical</item>
         <item name="android:lineSpacingExtra">3sp</item>
         <item name="android:clickable">true</item>
@@ -109,7 +134,26 @@
     <style name="dateCuring">
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">#646978</item>
-        <item name="fontFamily">@font/inter</item>
+        <item name="android:fontFamily">@font/inter</item>
     </style>
 
+    <style name="small_grey_text">
+        <item name="fontFamily">@font/inter</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">#646978</item>
+        <item name="android:lineSpacingExtra">1sp</item>
+        <item name="android:gravity">top</item>
+        <item name="android:translationY">-0.6sp</item>
+    </style>
+
+    <style name="small_blue_text">
+        <item name="android:textColor">#0082FF</item>
+        <item name="android:textColorHighlight">#0082FF</item>
+        <item name="android:textColorLink">#0082FF</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:fontFamily">@font/inter</item>
+        <item name="android:lineSpacingExtra">1sp</item>
+        <item name="android:gravity">top</item>
+        <item name="android:translationY">-0.6sp</item>
+    </style>
 </resources>

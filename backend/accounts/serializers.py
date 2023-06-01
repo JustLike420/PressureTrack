@@ -1,12 +1,10 @@
 from django.db import transaction
 from djoser.serializers import UserCreateSerializer
-from rest_framework import serializers, status
-from rest_framework.response import Response
+from rest_framework import serializers
 from djoser.conf import settings
 from .models import CustomUser
 from patients.models import Patient
 from doctors.models import Doctor, PatientDoctor
-
 
 
 class CreatePatient(serializers.ModelSerializer):
