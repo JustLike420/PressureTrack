@@ -104,6 +104,13 @@ public class ActivePatientActivity extends AppCompatActivity {
         measLoader(token, pk);
     }
 
+    private void clearToken() {
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("doctor_token", "");
+        editor.apply();
+    }
+
     private void mainLoader(PatientInfo patientInfo) {
         String fio = patientInfo.getUser().getLastName() + " " + patientInfo.getUser().getFirstName();
         binding.patientNameLabel.setText(fio);
@@ -160,6 +167,7 @@ public class ActivePatientActivity extends AppCompatActivity {
                         builder.setTitle("Ошибка аутентификации");
                         builder.setMessage("Неправильный токен аутентификации");
                         builder.setPositiveButton("ОК", (dialog, which) -> {
+                            clearToken();
                             Intent intent = new Intent(ActivePatientActivity.this, LoginActivity.class);
                             startActivity(intent);
                             finish();
@@ -210,12 +218,22 @@ public class ActivePatientActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
                 if (response.isSuccessful()) {
                     runOnUiThread(() -> finish());
+                } else if (response.code() == 400) {
+                    runOnUiThread(() -> {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(ActivePatientActivity.this, R.style.MyAlertDialog);
+                        builder.setTitle("Ошибка");
+                        builder.setMessage("Не получить данные пациента. Попробуйте позже.");
+                        builder.setPositiveButton("ОК", (dialog, which) -> {});
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    });
                 } else if (response.code() == 401) {
                     runOnUiThread(() -> {
                         AlertDialog.Builder builder = new AlertDialog.Builder(ActivePatientActivity.this, R.style.MyAlertDialog);
                         builder.setTitle("Ошибка аутентификации");
                         builder.setMessage("Неправильный токен аутентификации");
                         builder.setPositiveButton("ОК", (dialog, which) -> {
+                            clearToken();
                             Intent intent = new Intent(ActivePatientActivity.this, LoginActivity.class);
                             startActivity(intent);
                             finish();

@@ -56,6 +56,13 @@ public class NewTonometrActivity extends AppCompatActivity {
         backView.setOnClickListener(view -> { finish(); });
     }
 
+    private void clearToken() {
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("doctor_token", "");
+        editor.apply();
+    }
+
     private void newTonometrePost(String token) {
         apiInterface = APIClient.getClient().create(APIInterface.class);
         Device deviceObj = new Device(binding.deviceET.getText().toString().trim());
@@ -81,6 +88,7 @@ public class NewTonometrActivity extends AppCompatActivity {
                         builder.setTitle("Ошибка аутентификации");
                         builder.setMessage("Неправильный токен аутентификации");
                         builder.setPositiveButton("ОК", (dialog, which) -> {
+                            clearToken();
                             Intent intent = new Intent(NewTonometrActivity.this, LoginActivity.class);
                             startActivity(intent);
                             finish();

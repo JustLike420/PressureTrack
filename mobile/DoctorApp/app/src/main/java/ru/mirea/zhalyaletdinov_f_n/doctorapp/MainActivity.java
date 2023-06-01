@@ -85,6 +85,13 @@ public class MainActivity extends AppCompatActivity {
         archivedPatientsLoader(token);
     }
 
+    private void clearToken() {
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("doctor_token", "");
+        editor.apply();
+    }
+
     private void mainloader(String token) {
         apiInterface = APIClient.getClient().create(APIInterface.class);
         Call<AccountProfile> call = apiInterface.mainLoader("Token " + token);
@@ -113,12 +120,14 @@ public class MainActivity extends AppCompatActivity {
                         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.MyAlertDialog);
                         builder.setTitle("Ошибка аутентификации");
                         builder.setMessage("Неправильный токен аутентификации");
-                        builder.setPositiveButton("ОК", (dialog, which) -> {});
+                        builder.setPositiveButton("ОК", (dialog, which) -> {
+                            clearToken();
+                            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                            startActivity(intent);
+                            finish();
+                        });
                         AlertDialog dialog = builder.create();
                         dialog.show();
-                        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                        startActivity(intent);
-                        finish();
                     });
                 } else if (response.code() == 500) {
                     runOnUiThread(() -> {
@@ -183,6 +192,7 @@ public class MainActivity extends AppCompatActivity {
                         builder.setTitle("Ошибка аутентификации");
                         builder.setMessage("Неправильный токен аутентификации");
                         builder.setPositiveButton("ОК", (dialog, which) -> {
+                            clearToken();
                             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                             startActivity(intent);
                             finish();
@@ -249,6 +259,7 @@ public class MainActivity extends AppCompatActivity {
                         builder.setTitle("Ошибка аутентификации");
                         builder.setMessage("Неправильный токен аутентификации");
                         builder.setPositiveButton("ОК", (dialog, which) -> {
+                            clearToken();
                             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                             startActivity(intent);
                             finish();
@@ -323,12 +334,14 @@ public class MainActivity extends AppCompatActivity {
                         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.MyAlertDialog);
                         builder.setTitle("Ошибка аутентификации");
                         builder.setMessage("Неправильный токен аутентификации");
-                        builder.setPositiveButton("ОК", (dialog, which) -> {});
+                        builder.setPositiveButton("ОК", (dialog, which) -> {
+                            clearToken();
+                            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                            startActivity(intent);
+                            finish();
+                        });
                         AlertDialog dialog = builder.create();
                         dialog.show();
-                        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                        startActivity(intent);
-                        finish();
                     });
                 } else if (response.code() == 500) {
                     runOnUiThread(() -> {
@@ -414,6 +427,7 @@ public class MainActivity extends AppCompatActivity {
                         builder.setTitle("Ошибка аутентификации");
                         builder.setMessage("Неправильный токен аутентификации");
                         builder.setPositiveButton("ОК", (dialog, which) -> {
+                            clearToken();
                             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                             startActivity(intent);
                             finish();

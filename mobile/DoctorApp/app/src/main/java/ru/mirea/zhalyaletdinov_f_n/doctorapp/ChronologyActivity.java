@@ -70,6 +70,13 @@ public class ChronologyActivity extends AppCompatActivity {
         treatmentLoader(token, pk);
     }
 
+    private void clearToken() {
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("doctor_token", "");
+        editor.apply();
+    }
+
     private void treatmentLoader(String token, String pk) {
         apiInterface = APIClient.getClient().create(APIInterface.class);
         Call<List<TreatmentData>> call = apiInterface.getTreatments("Token " + token, pk);
@@ -98,6 +105,7 @@ public class ChronologyActivity extends AppCompatActivity {
                         builder.setTitle("Ошибка аутентификации");
                         builder.setMessage("Неправильный токен аутентификации");
                         builder.setPositiveButton("ОК", (dialog, which) -> {
+                            clearToken();
                             Intent intent = new Intent(ChronologyActivity.this, LoginActivity.class);
                             startActivity(intent);
                             finish();

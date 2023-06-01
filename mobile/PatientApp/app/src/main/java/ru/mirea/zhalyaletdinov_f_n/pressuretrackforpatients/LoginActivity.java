@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -19,11 +20,12 @@ import retrofit2.Response;
 import ru.mirea.zhalyaletdinov_f_n.pressuretrackforpatients.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends AppCompatActivity {
-    APIInterface apiInterface;
-    private ActivityLoginBinding binding;
+     APIInterface apiInterface;
+     private ActivityLoginBinding binding;
      Button loginButton, registerButton;
      TextInputEditText loginTV;
      EditText passwordTV;
+     TextView forgotPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,16 @@ public class LoginActivity extends AppCompatActivity {
         registerButton.setOnClickListener(view -> {
             Intent RegIntent = new Intent(LoginActivity.this,  RegistrationActivity.class);
             startActivity(RegIntent);
+        });
+
+        forgotPassword = binding.forgotPassword;
+        forgotPassword.setOnClickListener(view -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this, R.style.MyAlertDialog);
+            builder.setTitle("Заявка на изменение пароля");
+            builder.setMessage("Вскоре мы вышлем вам новый пароль для входа в аккаунт.");
+            builder.setPositiveButton("Закрыть", (dialog, which) -> {});
+            AlertDialog dialog = builder.create();
+            dialog.show();
         });
     }
 

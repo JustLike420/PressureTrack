@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -26,6 +27,7 @@ public class LoginActivity extends AppCompatActivity {
     private ActivityLoginBinding binding;
     Button authButton;
     EditText passwordET,emailLoginET;
+    TextView forgotPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +51,16 @@ public class LoginActivity extends AppCompatActivity {
                 dialog.show();
             }
             else auth();
+        });
+
+        forgotPassword = binding.forgotTV;
+        forgotPassword.setOnClickListener(view -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this, R.style.MyAlertDialog);
+            builder.setTitle("Заявка на изменение пароля");
+            builder.setMessage("Вскоре мы вышлем вам новый пароль для входа в аккаунт.");
+            builder.setPositiveButton("Закрыть", (dialog, which) -> {});
+            AlertDialog dialog = builder.create();
+            dialog.show();
         });
     }
 

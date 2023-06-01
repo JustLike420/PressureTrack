@@ -59,6 +59,13 @@ public class AddTreatmentActivity extends AppCompatActivity {
         backView.setOnClickListener(view -> finish());
     }
 
+    private void clearToken() {
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("doctor_token", "");
+        editor.apply();
+    }
+
     private void postTreatment(String token, String pk, String mess) {
         TreatmentData treatmentData = new TreatmentData(mess);
         apiInterface = APIClient.getClient().create(APIInterface.class);
@@ -91,6 +98,7 @@ public class AddTreatmentActivity extends AppCompatActivity {
                         builder.setTitle("Ошибка аутентификации");
                         builder.setMessage("Неправильный токен аутентификации");
                         builder.setPositiveButton("ОК", (dialog, which) -> {
+                            clearToken();
                             Intent intent = new Intent(AddTreatmentActivity.this, LoginActivity.class);
                             startActivity(intent);
                             finish();

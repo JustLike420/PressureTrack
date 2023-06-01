@@ -70,6 +70,7 @@ public class AddRecordActivity extends AppCompatActivity {
                                 builder.setTitle("Ошибка аутентификации");
                                 builder.setMessage("Неправильный токен аутентификации");
                                 builder.setPositiveButton("ОК", (dialog, which) -> {
+                                    clearToken();
                                     Intent intent = new Intent(AddRecordActivity.this, LoginActivity.class);
                                     startActivity(intent);
                                     finish();
@@ -120,6 +121,13 @@ public class AddRecordActivity extends AppCompatActivity {
         backIcon = binding.backIconAR;
         backIcon.setOnClickListener(view -> { finish(); });
         backView.setOnClickListener(view -> { finish(); });
+    }
+
+    private void clearToken() {
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("doctor_token", "");
+        editor.apply();
     }
 
     private boolean isInputValid(String rec) {
