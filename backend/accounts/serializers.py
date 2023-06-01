@@ -20,6 +20,8 @@ class CreatePatient(serializers.ModelSerializer):
         user = validation_data.pop('user')
         snils = validation_data.pop('doctor')
         patient_user = CustomUser.objects.create(**user)
+        patient_user.set_password(user['password'])
+        patient_user.save()
         patient = Patient.objects.create(user=patient_user, **validation_data)
         try:
             doctor = Doctor.objects.get(user__snils=snils)
