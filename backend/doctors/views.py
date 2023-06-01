@@ -139,7 +139,7 @@ class PatientTreatmentsView(APIView):
             raise NotAuthenticated()
         try:
             patient = get_object_or_404(Patient, pk=pk)
-            Treatment.objects.create(patient, message=request.data['message'])
+            Treatment.objects.create(patient=patient, message=request.data['message'])
             return Response(status=status.HTTP_201_CREATED)
         except Exception as e:
             return server_error(request)
