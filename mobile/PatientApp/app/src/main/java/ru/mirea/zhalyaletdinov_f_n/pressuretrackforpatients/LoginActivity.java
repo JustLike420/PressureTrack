@@ -55,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
         registerButton.setOnClickListener(view -> {
             Intent RegIntent = new Intent(LoginActivity.this,  RegistrationActivity.class);
             startActivity(RegIntent);
+            finish();
         });
 
         forgotPassword = binding.forgotPassword;

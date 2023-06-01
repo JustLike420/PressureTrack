@@ -74,7 +74,7 @@
                     android:layout_weight="3" />
 
                 <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/button"
+                    android:id="@+id/searchButton"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:layout_gravity="end"
@@ -85,13 +85,14 @@
             </LinearLayout>
 
             <EditText
+                android:id="@+id/searchEditText"
                 style="@style/searchViewText"
                 android:layout_width="377dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="12dp"
                 android:alpha="0.4"
-                android:autofillHints=""
+                android:visibility="gone"
                 android:background="@drawable/search"
                 android:drawableStart="@drawable/union"
                 android:drawablePadding="14dp"
@@ -117,7 +118,7 @@
                 android:layout_width="343dp"
                 android:layout_height="48dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="80dp"
+                android:layout_marginTop="500dp"
                 android:background="@drawable/button_white"
                 android:text="@string/logoutButtonLabel" />
 

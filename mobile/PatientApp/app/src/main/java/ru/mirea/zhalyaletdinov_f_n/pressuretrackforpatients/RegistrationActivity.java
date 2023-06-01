@@ -78,11 +78,10 @@ public class RegistrationActivity extends AppCompatActivity {
         });
 
         accountButton = binding.accountButton;
-        accountButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
+        accountButton.setOnClickListener(view -> {
+            Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
         });
     }
 

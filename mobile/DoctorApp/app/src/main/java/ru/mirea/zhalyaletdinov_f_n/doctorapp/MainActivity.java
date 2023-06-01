@@ -15,17 +15,22 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,9 +38,13 @@ public class MainActivity extends AppCompatActivity {
     private String token;
     private ActivityMainBinding binding;
     private Button logoutButton;
+    private ImageButton searchButton;
     RecyclerView recyclerView;
     private TabLayout tabLayout;
     private List<PatientCard> activePatientList, archivedPatientList;
+    private List<PatientCard> activeQueryList, archivedQueryList;
+    private EditText searchEditText;
+    private String searchQuery = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +62,14 @@ public class MainActivity extends AppCompatActivity {
 
         logoutButton = binding.logoutButton;
         logoutButton.setOnClickListener(view -> performLogout(token));
+
+        searchButton = binding.searchButton;
+        searchButton.setOnClickListener(view -> {
+            if (binding.searchEditText.getVisibility() == View.GONE)
+                binding.searchEditText.setVisibility(View.VISIBLE);
+            else
+                binding.searchEditText.setVisibility(View.GONE);
+        });
 
         tabLayout = binding.tabLayout;
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -80,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
+        binding.searchEditText.setVisibility(View.GONE);
         mainloader(token);
         activePatientsLoader(token);
         archivedPatientsLoader(token);
@@ -173,6 +191,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call<List<PatientCard>> call, @NonNull Response<List<PatientCard>> response) {
                 if (response.isSuccessful()) {
                     runOnUiThread(() -> {
+                        activeQueryList = response.body();
                         activePatientList = response.body();
                         initializePatientsCards(activePatientList);
                     });
@@ -242,7 +261,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<List<PatientCard>> call, @NonNull Response<List<PatientCard>> response) {
                 if (response.isSuccessful()) {
-                    runOnUiThread(() -> archivedPatientList = response.body());
+                    runOnUiThread(() -> {
+                        archivedQueryList = response.body();
+                        archivedPatientList = response.body();
+                    });
                 } else if (response.code() == 400) {
                     runOnUiThread(() -> {
                         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.MyAlertDialog);
@@ -381,12 +403,24 @@ public class MainActivity extends AppCompatActivity {
     private void initializePatientsCards(List<PatientCard> patientCardList) {
         recyclerView = binding.rvMain;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        PatientCardAdapter adapter = new PatientCardAdapter(patientCardList);
-        adapter.setOnItemClickListener(data -> {
+        PatientCardAdapter patientCardAdapter = new PatientCardAdapter(patientCardList);
+        patientCardAdapter.setOnItemClickListener(data -> {
             String pk = data.pk;
             stepIntoPatientProfile(token, pk);
         });
-        recyclerView.setAdapter(adapter);
+        searchEditText = binding.searchEditText;
+        searchEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override
+            public void afterTextChanged(Editable s) {
+                String searchQuery = s.toString();
+                patientCardAdapter.filter(searchQuery);
+            }
+        });
+        recyclerView.setAdapter(patientCardAdapter);
     }
 
     private void stepIntoPatientProfile(String token, String pk) {
@@ -487,11 +521,33 @@ public class MainActivity extends AppCompatActivity {
 
     static class PatientCardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         private final List<PatientCard> patientCardList;
-        public PatientCardAdapter(List<PatientCard> patientCardList) { this.patientCardList = patientCardList; }
+        private List<PatientCard> filteredList;
+
+        public PatientCardAdapter(List<PatientCard> patientCardList) {
+            this.filteredList = new ArrayList<>(patientCardList);
+            this.patientCardList = patientCardList;
+        }
         private OnItemClickListener listener;
 
         public interface OnItemClickListener { void onItemClick(PatientCardHolder data); }
         public void setOnItemClickListener(OnItemClickListener listener) { this.listener = listener; }
+
+        public void filter(String query) {
+            filteredList.clear();
+            if (query.isEmpty()) {
+                filteredList.addAll(patientCardList);
+            } else {
+                query = query.toLowerCase();
+                for (PatientCard patientCard : patientCardList) {
+                    String name = patientCard.getUser().getLast_name() + " " + patientCard.getUser().getFirst_name();
+                    String phone = patientCard.getUser().getPhone() != null ? patientCard.getUser().getPhone() : "";
+                    if (name.toLowerCase().contains(query) || phone.toLowerCase().contains(query)) {
+                        filteredList.add(patientCard);
+                    }
+                }
+            }
+            notifyDataSetChanged();
+        }
 
         @NonNull
         @Override
@@ -502,7 +558,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-            PatientCard patientCard = patientCardList.get(position);
+            PatientCard patientCard = filteredList.get(position);
             PatientCardHolder patientCardHolder = (PatientCardHolder) holder;
             patientCardHolder.setPK(patientCard.getPK());
 
@@ -530,7 +586,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getItemCount() {
-            return patientCardList.size();
+            return filteredList.size();
         }
     }
 }

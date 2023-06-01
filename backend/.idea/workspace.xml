@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3c6eea22-856f-4426-a255-0a04d1e35b60" name="Changes" comment="" />
+    <list default="true" id="3c6eea22-856f-4426-a255-0a04d1e35b60" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobile/DoctorApp/app/src/main/java/ru/mirea/zhalyaletdinov_f_n/doctorapp/APIClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/DoctorApp/app/src/main/java/ru/mirea/zhalyaletdinov_f_n/doctorapp/APIClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobile/DoctorApp/app/src/main/java/ru/mirea/zhalyaletdinov_f_n/doctorapp/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/DoctorApp/app/src/main/java/ru/mirea/zhalyaletdinov_f_n/doctorapp/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobile/DoctorApp/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/DoctorApp/app/src/main/res/layout/activity_main.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

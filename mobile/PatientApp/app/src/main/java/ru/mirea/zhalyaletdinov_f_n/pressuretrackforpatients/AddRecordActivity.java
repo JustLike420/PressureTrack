@@ -112,8 +112,15 @@ public class AddRecordActivity extends AppCompatActivity {
                         call.cancel();
                     }
                 });
+                finish();
+            } else {
+                AlertDialog.Builder builder = new AlertDialog.Builder(AddRecordActivity.this, R.style.MyAlertDialog);
+                builder.setTitle("Ошибка");
+                builder.setMessage("Неверный формат данных.");
+                builder.setPositiveButton("Понятно", (dialog, which) -> {});
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
-            finish();
         });
 
         // Кнопка назад

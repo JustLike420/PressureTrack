@@ -189,10 +189,15 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call<List<Treatment>> call, @NonNull Response<List<Treatment>> response) {
                 if (response.isSuccessful()) {
                     List<Treatment> list_treatment = response.body();
+                    Treatment treatment;
+                    String message;
                     assert list_treatment != null;
-                    Treatment treatment = list_treatment.get(0);
-                    String message = treatment.getMessage();
-                    runOnUiThread(() -> binding.treatmentText.setText(message));
+                    if (list_treatment.size() > 0) {
+                        treatment = list_treatment.get(0);
+                        message = treatment.getMessage();
+                        runOnUiThread(() -> binding.treatmentText.setText(message));
+                    } else
+                        runOnUiThread(() -> binding.treatmentText.setText("Нет ни одного назначенного лечения от Вашего врача"));
                 } else if (response.code() == 400) {
                     runOnUiThread(() -> {
                         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.MyAlertDialog);
@@ -501,7 +506,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initializeLineChart(List<GetMeasurment> measList) {
         List<GetMeasurment> weekMeasList = null;
-        if (weekMeasList.size() > 7)
+        if (measList.size() > 7)
             weekMeasList = measList.subList(0, Math.min(measList.size(), 7));
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'");
         DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");

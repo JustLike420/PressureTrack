@@ -129,8 +129,17 @@ public class FourthRegPageActivity extends AppCompatActivity {
         call.enqueue(new Callback<CreatePatient>() {
             @Override
             public void onResponse(@NonNull Call<CreatePatient> call, @NonNull Response<CreatePatient> response) {
-                if (response.isSuccessful()) {
-                    auth(patient);
+                if (response.isSuccessful()) {AlertDialog.Builder builder = new AlertDialog.Builder(FourthRegPageActivity.this, R.style.MyAlertDialog);
+                    runOnUiThread(() -> {
+                        builder.setTitle("Успех!");
+                        builder.setMessage("Регистрация прошла успешно.");
+                        builder.setPositiveButton("Хорошо", (dialog, which) -> {});
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                        Intent intent = new Intent(FourthRegPageActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    });
                 } else if (response.code() == 400) {
                     runOnUiThread(() -> {
                         AlertDialog.Builder builder = new AlertDialog.Builder(FourthRegPageActivity.this, R.style.MyAlertDialog);
@@ -176,69 +185,69 @@ public class FourthRegPageActivity extends AppCompatActivity {
         });
     }
 
-    private void auth(CreatePatient patient) {
-        apiInterface = APIClient.getClient().create(APIInterface.class);
-        LoginData loginData = new LoginData(patient.getUser().getEmail().trim(), patient.getUser().getPassword().trim());
-        Call<LoginResponse> call = apiInterface.performLogin(loginData);
-        call.enqueue(new Callback<LoginResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<LoginResponse> call, @NonNull Response<LoginResponse> response) {
-                if (response.isSuccessful()) {
-                    LoginResponse responseBody = response.body();
-                    String token = responseBody.getAuthToken();
-                    Log.d("Token", token);
-                    saveTokenToSharedPreferences(token);
-                    System.out.println(token);
-
-                    runOnUiThread(() -> {
-                        Intent mainIntent = new Intent(FourthRegPageActivity.this, MainActivity.class);
-                        startActivity(mainIntent);
-                        finish();
-                    });
-                } else if (response.code() == 400) {
-                    runOnUiThread(() -> {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(FourthRegPageActivity.this, R.style.MyAlertDialog);
-                        builder.setTitle("Неверные данные");
-                        builder.setMessage("Неправильный номер телефона/email или пароль");
-                        builder.setPositiveButton("ОК", (dialog, which) -> {});
-                        AlertDialog dialog = builder.create();
-                        dialog.show();
-                    });
-                } else if (response.code() == 500) {
-                    runOnUiThread(() -> {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(FourthRegPageActivity.this, R.style.MyAlertDialog);
-                        builder.setTitle("Внутренняя ошибка сервера");
-                        builder.setMessage("Произошла внутренняя ошибка сервера. Попробуйте позже.");
-                        builder.setPositiveButton("ОК", (dialog, which) -> {});
-                        AlertDialog dialog = builder.create();
-                        dialog.show();
-                    });
-                } else {
-                    runOnUiThread(() -> {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(FourthRegPageActivity.this, R.style.MyAlertDialog);
-                        builder.setTitle("Ошибка сервера");
-                        builder.setMessage("Произошла ошибка при обращении к серверу.");
-                        builder.setPositiveButton("ОК", (dialog, which) -> {});
-                        AlertDialog dialog = builder.create();
-                        dialog.show();
-                    });
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<LoginResponse> call, @NonNull Throwable t) {
-                runOnUiThread(() -> {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(FourthRegPageActivity.this, R.style.MyAlertDialog);
-                    builder.setTitle("Ошибка");
-                    builder.setMessage("Не удалось выполнить операцию. Пожалуйста, проверьте подключение к сети.");
-                    builder.setPositiveButton("ОК", (dialog, which) -> {});
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
-                });
-                call.cancel();
-            }
-        });
-    }
+//    private void auth(CreatePatient patient) {
+//        apiInterface = APIClient.getClient().create(APIInterface.class);
+//        LoginData loginData = new LoginData(patient.getUser().getEmail().trim(), patient.getUser().getPassword().trim());
+//        Call<LoginResponse> call = apiInterface.performLogin(loginData);
+//        call.enqueue(new Callback<LoginResponse>() {
+//            @Override
+//            public void onResponse(@NonNull Call<LoginResponse> call, @NonNull Response<LoginResponse> response) {
+//                if (response.isSuccessful()) {
+//                    LoginResponse responseBody = response.body();
+//                    String token = responseBody.getAuthToken();
+//                    Log.d("Token", token);
+//                    saveTokenToSharedPreferences(token);
+//                    System.out.println(token);
+//
+//                    runOnUiThread(() -> {
+//                        Intent mainIntent = new Intent(FourthRegPageActivity.this, MainActivity.class);
+//                        startActivity(mainIntent);
+//                        finish();
+//                    });
+//                } else if (response.code() == 400) {
+//                    runOnUiThread(() -> {
+//                        AlertDialog.Builder builder = new AlertDialog.Builder(FourthRegPageActivity.this, R.style.MyAlertDialog);
+//                        builder.setTitle("Неверные данные");
+//                        builder.setMessage("Неправильный номер телефона/email или пароль");
+//                        builder.setPositiveButton("ОК", (dialog, which) -> {});
+//                        AlertDialog dialog = builder.create();
+//                        dialog.show();
+//                    });
+//                } else if (response.code() == 500) {
+//                    runOnUiThread(() -> {
+//                        AlertDialog.Builder builder = new AlertDialog.Builder(FourthRegPageActivity.this, R.style.MyAlertDialog);
+//                        builder.setTitle("Внутренняя ошибка сервера");
+//                        builder.setMessage("Произошла внутренняя ошибка сервера. Попробуйте позже.");
+//                        builder.setPositiveButton("ОК", (dialog, which) -> {});
+//                        AlertDialog dialog = builder.create();
+//                        dialog.show();
+//                    });
+//                } else {
+//                    runOnUiThread(() -> {
+//                        AlertDialog.Builder builder = new AlertDialog.Builder(FourthRegPageActivity.this, R.style.MyAlertDialog);
+//                        builder.setTitle("Ошибка сервера");
+//                        builder.setMessage("Произошла ошибка при обращении к серверу.");
+//                        builder.setPositiveButton("ОК", (dialog, which) -> {});
+//                        AlertDialog dialog = builder.create();
+//                        dialog.show();
+//                    });
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(@NonNull Call<LoginResponse> call, @NonNull Throwable t) {
+//                runOnUiThread(() -> {
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(FourthRegPageActivity.this, R.style.MyAlertDialog);
+//                    builder.setTitle("Ошибка");
+//                    builder.setMessage("Не удалось выполнить операцию. Пожалуйста, проверьте подключение к сети.");
+//                    builder.setPositiveButton("ОК", (dialog, which) -> {});
+//                    AlertDialog dialog = builder.create();
+//                    dialog.show();
+//                });
+//                call.cancel();
+//            }
+//        });
+//    }
     private void saveTokenToSharedPreferences(String token) {
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
