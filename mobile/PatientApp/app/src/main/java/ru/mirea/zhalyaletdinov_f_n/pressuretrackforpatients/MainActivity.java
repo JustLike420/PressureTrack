@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
     private void clearToken() {
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("doctor_token", "");
+        editor.putString("token", "");
         editor.apply();
     }
 
