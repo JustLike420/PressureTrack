@@ -17,5 +17,4 @@ class CustomUser(AbstractUser):
         return self.email
 
     def save(self, *args, **kwargs):
-        self.set_password(self.password)
         super(CustomUser, self).save(*args, **kwargs)
