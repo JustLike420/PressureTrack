@@ -15,20 +15,35 @@
     </style>
 
     <style name="MyAlertDialog" parent="Theme.MaterialComponents.Light.Dialog.Alert">
-        <item name="android:textSize">18sp</item>
-        <item name="android:fontFamily">@font/inter</item>
-        <item name="android:letterSpacing">-0.02</item>
-        <item name="android:dialogCornerRadius">30px</item>
-        <item name="android:textColor">#1D1D1D</item>
+        <item name="android:dialogCornerRadius">20dp</item>
+        <item name="android:titleTextStyle">@style/MyDialogTitleText</item>
+        <item name="subtitleTextStyle">@style/MyDialogMessageText</item>
         <item name="buttonBarPositiveButtonStyle">@style/MyAlertDialogButton</item>
         <item name="buttonBarNegativeButtonStyle">@style/MyAlertDialogButton</item>
         <item name="buttonBarNeutralButtonStyle">@style/MyAlertDialogButton</item>
+    </style>
+
+    <style name="MyDialogTitleText" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">@font/inter</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="android:textColor">#1D1D1D</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="MyDialogMessageText" parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/inter</item>
+        <item name="android:letterSpacing">0.01</item>
+        <item name="android:textColor">#646978</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="MyAlertDialogButton" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
         <item name="android:textSize">16sp</item>
         <item name="android:letterSpacing">-0.01</item>
         <item name="android:textColor">#0082FF</item>
+        <item name="android:textAllCaps">false</item>
     </style>
 
     <style name="heading_1_s">
@@ -143,6 +158,13 @@
         <item name="android:textColor">#646978</item>
         <item name="android:lineSpacingExtra">1sp</item>
         <item name="android:gravity">top</item>
+        <item name="android:translationY">-0.6sp</item>
+    </style>
+
+    <style name="small_grey_text2">
+        <item name="fontFamily">@font/inter</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#646978</item>
         <item name="android:translationY">-0.6sp</item>
     </style>
 

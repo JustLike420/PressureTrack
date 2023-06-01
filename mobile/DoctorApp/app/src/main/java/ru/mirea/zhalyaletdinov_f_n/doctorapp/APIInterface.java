@@ -11,6 +11,7 @@ import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 
 public interface APIInterface {
     @POST("accounts/auth/token/login/")
@@ -35,8 +36,8 @@ public interface APIInterface {
     Call<Void> archivePatient(@Header("Authorization") String token, @Path("id") String pk);
 
     @POST("doctor/treatments/{id}")
-    Call<TreatmentData> createTreatment(@Header("Authorization") String token, @Body TreatmentData treatmentData);
+    Call<Void> createTreatment(@Header("Authorization") String token, @Path("id") String pk, @Body TreatmentData treatmentData);
 
-    // @GET("doctor/treatments/{id}")
-    // Call<TreatmentData> createTreatment(@Header("Authorization") String token, @Body TreatmentData treatmentData);
+     @GET("doctor/treatments/{id}")
+     Call<List<TreatmentData>> getTreatments(@Header("Authorization") String token, @Path("id") String pk);
 }

@@ -16,6 +16,7 @@
     <string name="noData">—</string>
     <string name="logoutButtonLabel">Выйти</string>
     <string name="PatientActivityLabel">Пациент</string>
+    <string name="ChronologyActivityLabel">Хронология</string>
     <string name="FirstTabLabel">Информация</string>
     <string name="SecondTabLabel">Хронология</string>
     <string name="patientNameLabel">[Имя пациента]</string>
@@ -31,4 +32,10 @@
     <string name="newTreatButtonLabel">Скорректировать лечение</string>
     <string name="chronoCardDate">Дата записи</string>
     <string name="treatmentCardLabel">Лечение</string>
+    <string name="newTreatActivityLabel">Скорректировать лечение</string>
+    <string name="attachedTreatmentLabel">Назначенное лечение</string>
+    <string name="sendString">Отправить</string>
+    <string name="enterNewTreatment">Введите текст для пациента...</string>
+    <string name="archlabel">Пациент в архиве</string>
+    <string name="unarchiveLabel">Разархивировать</string>
 </resources>

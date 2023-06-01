@@ -50,8 +50,9 @@
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
         android:layout_width="409dp"
-        android:layout_height="673dp"
+        android:layout_height="0dp"
         android:fillViewport="true"
+        android:paddingTop="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -264,11 +265,11 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/treatmentChronoButton"
+                style="@style/blue_button_label"
                 android:layout_width="343dp"
                 android:layout_height="48dp"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/button_blue"
-                style="@style/blue_button_label"
                 android:text="@string/chronoButtonLabel"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

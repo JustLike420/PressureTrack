@@ -265,7 +265,8 @@ public class MainActivity extends AppCompatActivity {
 
                     runOnUiThread(() -> {
                         initializeRecyclerView(weekMeasList, todayMeasList);
-                        initializeLineChart(weekMeasList);
+                        if (weekMeasList.size() > 0)
+                            initializeLineChart(weekMeasList);
                     });
                 } else if (response.code() == 400) {
                     runOnUiThread(() -> {
@@ -488,7 +489,9 @@ public class MainActivity extends AppCompatActivity {
        ----------------------------------------------------------------------------- */
 
     private void initializeLineChart(List<GetMeasurment> measList) {
-        List<GetMeasurment> weekMeasList = measList.subList(0, Math.min(measList.size(), 7));
+        List<GetMeasurment> weekMeasList = null;
+        if (weekMeasList.size() > 7)
+            weekMeasList = measList.subList(0, Math.min(measList.size(), 7));
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'");
         DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 

@@ -495,6 +495,11 @@ public class MainActivity extends AppCompatActivity {
             String fio = patientCard.getUser().getLast_name() + " " + patientCard.getUser().getFirst_name();
             patientCardHolder.patientName.setText(fio);
 
+            if (patientCard.getUser().getPhone() == null)
+                patientCardHolder.patientPhone.setText("Нет номера телефона");
+            else
+                patientCardHolder.patientPhone.setText(patientCard.getUser().getPhone());
+
             String dateString = patientCard.getTreatment_start();
             DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'");
             DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");

@@ -1,23 +1,22 @@
 package ru.mirea.zhalyaletdinov_f_n.doctorapp;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.mikephil.charting.charts.LineChart;
 
@@ -59,7 +58,6 @@ public class ActivePatientActivity extends AppCompatActivity {
 
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         token = sharedPreferences.getString("doctor_token", "");
-        System.out.println(token);
 
         Intent intent = getIntent();
         patientInfo = (PatientInfo) intent.getSerializableExtra("PatientInfo");
@@ -69,9 +67,24 @@ public class ActivePatientActivity extends AppCompatActivity {
         measLoader(token, pk);
 
         newTreatmentButton = binding.newTreatmentButton;
-        archiveButton = binding.archiveButton;
-        treatmentChronoButton = binding.treatmentChronoButton;
+        newTreatmentButton.setOnClickListener(view -> {
+            Intent intentNewTreatment = new Intent(ActivePatientActivity.this, AddTreatmentActivity.class);
+            intentNewTreatment.putExtra("PK", pk);
+            startActivity(intentNewTreatment);
+        });
 
+        archiveButton = binding.archiveButton;
+        archiveButton.setOnClickListener(view -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(ActivePatientActivity.this, R.style.MyAlertDialog);
+            builder.setTitle("Перемещение в архив");
+            builder.setMessage("Вы уверены, что хотите заархивировать этого пациента?");
+            builder.setPositiveButton("Заархивировать", (dialog, which) -> performArchivePatient(token, pk));
+            builder.setNegativeButton("Отмена", (dialog, which) -> {});
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        });
+
+        treatmentChronoButton = binding.treatmentChronoButton;
         treatmentChronoButton.setOnClickListener(view -> {
             Intent chronoIntent = new Intent(ActivePatientActivity.this, ChronologyActivity.class);
             chronoIntent.putExtra("PK", pk);
@@ -129,7 +142,8 @@ public class ActivePatientActivity extends AppCompatActivity {
 
                     runOnUiThread(() -> {
                         initializeRecyclerView(weekMeasList, todayMeasList);
-                        initializeLineChart(weekMeasList);
+                        if (weekMeasList.size() > 0)
+                            initializeLineChart(weekMeasList);
                     });
                 } else if (response.code() == 400) {
                     runOnUiThread(() -> {
@@ -139,7 +153,6 @@ public class ActivePatientActivity extends AppCompatActivity {
                         builder.setPositiveButton("ОК", (dialog, which) -> {});
                         AlertDialog dialog = builder.create();
                         dialog.show();
-                        Log.e("Response", response.toString());
                     });
                 } else if (response.code() == 401) {
                     runOnUiThread(() -> {
@@ -176,6 +189,63 @@ public class ActivePatientActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(@NonNull Call<List<GetMeasurment>> call, @NonNull Throwable t) {
+                runOnUiThread(() -> {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ActivePatientActivity.this, R.style.MyAlertDialog);
+                    builder.setTitle("Ошибка");
+                    builder.setMessage("Не удалось выполнить операцию. Пожалуйста, проверьте подключение к сети.");
+                    builder.setPositiveButton("ОК", (dialog, which) -> {});
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                });
+                call.cancel();
+            }
+        });
+    }
+
+    private void performArchivePatient(String token, String pk) {
+        apiInterface = APIClient.getClient().create(APIInterface.class);
+        Call<Void> call = apiInterface.archivePatient("Token " + token, pk);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                if (response.isSuccessful()) {
+                    runOnUiThread(() -> finish());
+                } else if (response.code() == 401) {
+                    runOnUiThread(() -> {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(ActivePatientActivity.this, R.style.MyAlertDialog);
+                        builder.setTitle("Ошибка аутентификации");
+                        builder.setMessage("Неправильный токен аутентификации");
+                        builder.setPositiveButton("ОК", (dialog, which) -> {
+                            Intent intent = new Intent(ActivePatientActivity.this, LoginActivity.class);
+                            startActivity(intent);
+                            finish();
+                        });
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    });
+                } else if (response.code() == 500) {
+                    runOnUiThread(() -> {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(ActivePatientActivity.this, R.style.MyAlertDialog);
+                        builder.setTitle("Внутренняя ошибка сервера");
+                        builder.setMessage("Произошла внутренняя ошибка сервера. Попробуйте позже.");
+                        builder.setPositiveButton("ОК", (dialog, which) -> {});
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    });
+                } else {
+                    runOnUiThread(() -> {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(ActivePatientActivity.this, R.style.MyAlertDialog);
+                        builder.setTitle("Ошибка сервера");
+                        builder.setMessage("Произошла ошибка при обращении к серверу.");
+                        builder.setPositiveButton("ОК", (dialog, which) -> {});
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
                 runOnUiThread(() -> {
                     AlertDialog.Builder builder = new AlertDialog.Builder(ActivePatientActivity.this, R.style.MyAlertDialog);
                     builder.setTitle("Ошибка");
@@ -277,7 +347,9 @@ public class ActivePatientActivity extends AppCompatActivity {
        ----------------------------------------------------------------------------- */
 
     private void initializeLineChart(List<GetMeasurment> measList) {
-        List<GetMeasurment> weekMeasList = measList.subList(0, Math.min(measList.size(), 7));
+        List<GetMeasurment> weekMeasList = null;
+        if (measList.size() > 7)
+            weekMeasList = measList.subList(0, Math.min(measList.size(), 7));
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'");
         DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
