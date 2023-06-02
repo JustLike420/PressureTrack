@@ -70,6 +70,12 @@ public class ChronologyActivity extends AppCompatActivity {
         treatmentLoader(token, pk);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        treatmentLoader(token, pk);
+    }
+
     private void clearToken() {
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();

@@ -69,7 +69,7 @@ public class ArchivedPatientActivity extends AppCompatActivity {
         archiveButton = binding.archiveButton;
         archiveButton.setOnClickListener(view -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.MyAlertDialog);
-            builder.setTitle("Перемещение в архив");
+            builder.setTitle("Перемещение из архива");
             builder.setMessage("Вы уверены, что хотите разархивировать этого пациента?");
             builder.setPositiveButton("Разархивировать", (dialog, which) -> performArchivePatient(token, pk));
             builder.setNegativeButton("Отмена", (dialog, which) -> {});
@@ -354,11 +354,21 @@ public class ArchivedPatientActivity extends AppCompatActivity {
         List<GetMeasurment> weekMeasList = null;
         if (measList.size() > 7)
             weekMeasList = measList.subList(0, Math.min(measList.size(), 7));
+        else
+            weekMeasList = measList;
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'");
         DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
-        String beginDate = weekMeasList.get(weekMeasList.size()-1).getCreated_at();
-        String endDate = weekMeasList.get(0).getCreated_at();
+        String beginDate, endDate;
+
+        if (weekMeasList.size() > 1) {
+            beginDate = weekMeasList.get(weekMeasList.size()-1).getCreated_at();
+            endDate = weekMeasList.get(0).getCreated_at();
+        }
+        else {
+            beginDate = weekMeasList.get(0).getCreated_at();
+            endDate = weekMeasList.get(0).getCreated_at();
+        }
         binding.beginDateET.setText(LocalDateTime.parse(beginDate, inputFormatter).format(outputFormatter).trim());
         binding.endDateET.setText(LocalDateTime.parse(endDate, inputFormatter).format(outputFormatter).trim());
 

@@ -104,6 +104,13 @@ public class ActivePatientActivity extends AppCompatActivity {
         measLoader(token, pk);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mainLoader(patientInfo);
+        measLoader(token, pk);
+    }
+
     private void clearToken() {
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -368,11 +375,21 @@ public class ActivePatientActivity extends AppCompatActivity {
         List<GetMeasurment> weekMeasList = null;
         if (measList.size() > 7)
             weekMeasList = measList.subList(0, Math.min(measList.size(), 7));
+        else
+            weekMeasList = measList;
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'");
         DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
-        String beginDate = weekMeasList.get(weekMeasList.size()-1).getCreated_at();
-        String endDate = weekMeasList.get(0).getCreated_at();
+        String beginDate, endDate;
+
+        if (weekMeasList.size() > 1) {
+            beginDate = weekMeasList.get(weekMeasList.size()-1).getCreated_at();
+            endDate = weekMeasList.get(0).getCreated_at();
+        }
+        else {
+            beginDate = weekMeasList.get(0).getCreated_at();
+            endDate = weekMeasList.get(0).getCreated_at();
+        }
         binding.beginDateET.setText(LocalDateTime.parse(beginDate, inputFormatter).format(outputFormatter).trim());
         binding.endDateET.setText(LocalDateTime.parse(endDate, inputFormatter).format(outputFormatter).trim());
 

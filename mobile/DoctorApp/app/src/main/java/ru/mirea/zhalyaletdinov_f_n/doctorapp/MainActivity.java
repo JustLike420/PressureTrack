@@ -103,6 +103,14 @@ public class MainActivity extends AppCompatActivity {
         archivedPatientsLoader(token);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mainloader(token);
+        activePatientsLoader(token);
+        archivedPatientsLoader(token);
+    }
+
     private void clearToken() {
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
