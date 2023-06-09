@@ -1,0 +1,59 @@
+<resources>
+    <string name="app_name">Моё давление</string>
+    <string name="tonometre_desc">Точная модель устройства позволит вашему лечащему врачу точнее интерпретировать результаты</string>
+    <string name="guides">Подготовка:\n\n
+<string_array><item> 1.\tВыберите спокойную обстановку.</item>\n
+<item> 2.\tПосле еды должно пройти 2 часа.</item>\n
+<item> 3.\tНельзя употреблять кофе или курить\n\t\t\tза 30 минут до измерения.</item>\n
+<item> 4.\tИзбегайте активности перед\n\t\t\tизмерением.</item>\n
+<item> 5.\tПри необходимости очистить мочевой\n\t\t\tпузырь и кишечник.</item>\n
+<item> 6.\tСидите спокойно в течение 5 минут\n\t\t\tперед измерением артериального\n\t\t\tдавления.</item>\n
+<item> 7.\tЕсли возможно, не проводите\n\t\t\tизмерения, если испытываете\n\t\t\tдискомфорт или стресс.</item>\n
+<item> 8.\tСнимите плотно облегающие\n\t\t\tпредметы одежды с плеча. Чтобы\n\t\t\tизбежать сдавливания, рукава\n\t\t\tне должны свертываться — они\n\t\t\tне мешают манжете, если они\n\t\t\tсложены.</item>
+</string_array>\n\nВо время измерения:\n\n<string_array>
+<item> 1.\tНе разговаривайте.</item>\n
+<item> 2.\tСядьте на стул со спинкой.</item>\n
+<item> 3.\tПоложите манжету артериального\n\t\t\tдавления на середину руки,\n\t\t\t2-3 см выше локтя.</item>\n
+<item> 4.\tПоложите руку на уровне сердца.</item>\n
+<item> 5.\tПоставьте ноги на пол.\n\t\t\tНе скрещивайте.</item></string_array></string>
+    <string name="onWeekLabel">За неделю</string>
+    <string name="noData">—</string>
+    <string name="CureLabel">Лечение</string>
+    <string name="WelcomeLabel">Добрый день,\n</string>
+    <string name="GraphLabel">График замеров</string>
+    <string name="DateRange">—</string>
+    <string name="TodayCardsLabel">За сегодня</string>
+    <string name="GuideLabel">Как правильно замерять давление?</string>
+    <string name="TonometrLabel">Вы используете тонометр</string>
+    <string name="question">Уже другой?</string>
+    <string name="updateTonometreLabel">Обновить</string>
+    <string name="model">Model</string>
+    <string name="logoutLabel">Выйти</string>
+    <string name="addRecordLabel">Добавить замер</string>
+    <string name="cureDesc">TextView</string>
+    <string name="logoName">Моё давление</string>
+    <string name="regLabel">Регистрация</string>
+    <string name="loginLabel">Вход</string>
+    <string name="loginHintLabel">Телефон или почта</string>
+    <string name="passwordLoginLabel">Пароль</string>
+    <string name="registerButtonLabel">Зарегистрироваться</string>
+    <string name="loginButtonLabel">Войти</string>
+    <string name="forgotLabel">Забыли пароль?</string>
+    <string name="fioLabel">Ваше имя и фамилия</string>
+    <string name="emailLabel">Ваш телефон или почта</string>
+    <string name="passwordHintLabel">Придумайте пароль</string>
+    <string name="returnLabel">У меня уже есть аккаунт</string>
+    <string name="SecPageLabel">Пожалуйста, укажите ваш рост и вес</string>
+    <string name="heightLabel">Рост</string>
+    <string name="weightLabel">Вес</string>
+    <string name="goTo3PageLabel">Вперед</string>
+    <string name="lastRegLabel">Последний шаг — ваш тонометр</string>
+    <string name="modelRegHint">Изготовитель и модель</string>
+    <string name="thirdRegPageButtonLabel">Продолжить</string>
+    <string name="docRegPageLabel">Теперь, можно записаться к врачу</string>
+    <string name="docRegInputHint">Введите СНИЛС лечащего врача</string>
+    <string name="snilsHint">000-000-000 00</string>
+    <string name="buttonCompRegLabel">Подтвердить</string>
+    <string name="newTonometrHint">Изготовитель и модель</string>
+    <string name="newTonometrWelcomeLabel">Введите модель нового тонометра</string>
+</resources>

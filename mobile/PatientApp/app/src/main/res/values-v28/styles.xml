@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="MyAlertDialog" parent="Theme.MaterialComponents.Light.Dialog.Alert">
+        <item name="android:dialogCornerRadius">20dp</item>
+        <item name="android:titleTextStyle">@style/MyDialogTitleText</item>
+        <item name="subtitleTextStyle">@style/MyDialogMessageText</item>
+        <item name="buttonBarPositiveButtonStyle">@style/MyAlertDialogButton</item>
+        <item name="buttonBarNegativeButtonStyle">@style/MyAlertDialogButton</item>
+        <item name="buttonBarNeutralButtonStyle">@style/MyAlertDialogButton</item>
+    </style>
+
+</resources>

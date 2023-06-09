@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddRecordActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout21"
+        android:layout_width="409dp"
+        android:layout_height="55dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter"
+            android:text="Ввод измерений"
+            android:textColor="#1D1D1D"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/backViewAR"
+            android:layout_width="55dp"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:onClick="returnToMainFromRec"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/backIconAR"
+            android:layout_width="11dp"
+            android:layout_height="18.5dp"
+            android:clickable="true"
+            android:onClick="returnToMainFromRec"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/backViewAR"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/vector__stroke_" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="409dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="2dp"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout22"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout21">
+
+        <TextView
+            android:id="@+id/textView19"
+            android:layout_width="343dp"
+            android:layout_height="48dp"
+            android:fontFamily="@font/inter"
+            android:textColor="#1D1D1D"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginTop="32dp"
+            android:text="Введите замеры, разделяя цифры пробелом"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView20"
+            android:layout_width="200dp"
+            android:layout_height="19dp"
+            android:fontFamily="@font/inter"
+            android:gravity="top"
+            android:lineSpacingExtra="1sp"
+            android:textColor="#646978"
+            android:textSize="16sp"
+            android:translationY="-0.6sp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="112dp"
+            android:text="Верхнее / нижнее / пульс"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/pressET"
+            android:layout_width="343dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="143dp"
+            android:background="@drawable/edittext_border"
+            android:ems="10"
+            android:fontFamily="@font/inter"
+            android:gravity="center_vertical"
+            android:hint="120 80 70"
+            android:letterSpacing="0.01"
+            android:paddingHorizontal="14dp"
+            android:textColor="#000000"
+            android:textColorHint="#A0A3AD"
+            android:textSize="16sp"
+            android:inputType="textPersonName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/commentET"
+            android:layout_width="343dp"
+            android:layout_height="150dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="220dp"
+            android:background="@drawable/edittext_border"
+            android:ems="10"
+            android:fontFamily="@font/inter"
+            android:gravity="top"
+            android:paddingTop="10dp"
+            android:hint="Комментарий (опционально)"
+            android:inputType="textPersonName"
+            android:letterSpacing="0.01"
+            android:paddingHorizontal="14dp"
+            android:textColor="#000000"
+            android:textColorHint="#A0A3AD"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout22"
+        android:layout_width="409dp"
+        android:layout_height="78dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/newRecButton"
+            android:layout_width="343dp"
+            android:layout_height="48dp"
+            android:background="@drawable/button_blue"
+            android:onClick="newRecordOnClick"
+            android:text="Сохранить"
+            android:fontFamily="@font/inter"
+            android:textColor="#FFFFFF"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
