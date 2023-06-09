@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:height="73.19837dp" android:viewportHeight="75"
+    android:viewportWidth="92" android:width="89.79dp"
+    >
+    <group android:name="rectangle">
+        <path android:pathData="M11.165,0L80.623,0A10.165,10.165 0,0 1,90.788 10.165L90.788,61.835A10.165,10.165 0,0 1,80.623 72L11.165,72A10.165,10.165 0,0 1,1 61.835L1,10.165A10.165,10.165 0,0 1,11.165 0z">
+            <aapt:attr name="android:fillColor">
+                <gradient android:endX="45.894" android:endY="72"
+                    android:startX="45.894" android:startY="0" android:type="linear">
+                    <item android:color="#FFF9F9F9" android:offset="0"/>
+                    <item android:color="#FFF6F6F6" android:offset="1"/>
+                </gradient>
+            </aapt:attr>
+        </path>
+        <path android:fillColor="#00000000"
+            android:pathData="M11.165,0.593L80.624,0.593A9.572,9.572 0,0 1,90.195 10.165L90.195,61.835A9.572,9.572 0,0 1,80.624 71.407L11.165,71.407A9.572,9.572 0,0 1,1.593 61.835L1.593,10.165A9.572,9.572 0,0 1,11.165 0.593z" android:strokeWidth="1.18588">
+            <aapt:attr name="android:strokeColor">
+                <gradient android:endX="45.894" android:endY="72"
+                    android:startX="45.894" android:startY="0" android:type="linear">
+                    <item android:color="#FFDFDFDF" android:offset="0"/>
+                    <item android:color="#FFBDBDBD" android:offset="1"/>
+                </gradient>
+            </aapt:attr>
+        </path>
+    </group>
+    <group android:name="ellipse" android:translateX="74.54" android:translateY="13.55">
+        <clip-path
+            android:pathData="M6.77647 3.38824C6.77647 5.25951 5.25951 6.77647 3.38824 6.77647C1.51696 6.77647 0 5.25951 0 3.38824C0 1.51696 1.51696 0 3.38824 0C5.25951 0 6.77647 1.51696 6.77647 3.38824Z"
+            />
+        <path
+            android:pathData="M0 0V6.77647H6.77647V0"
+            android:fillColor="#D8D8D8"
+            />
+    </group>
+    <group android:name="heart" android:translateX="8.47" android:translateY="13.55">
+        <path android:pathData="M15.294,27.659C15.608,27.659 16.056,27.452 16.384,27.26C24.788,21.945 30.118,15.759 30.118,9.47C30.118,4.244 26.49,0.553 21.803,0.553C18.892,0.553 16.653,2.147 15.294,4.583C13.966,2.162 11.697,0.553 8.786,0.553C4.098,0.553 0.471,4.244 0.471,9.47C0.471,15.759 5.8,21.945 14.219,27.26C14.533,27.452 14.981,27.659 15.294,27.659Z">
+            <aapt:attr name="android:fillColor">
+                <gradient android:centerX="22.032" android:centerY="-2.507"
+                    android:gradientRadius="34.442" android:type="radial">
+                    <item android:color="#FFFFBDD5" android:offset="0"/>
+                    <item android:color="#FFFF5959" android:offset="0.641"/>
+                </gradient>
+            </aapt:attr>
+        </path>
+    </group>
+    <group android:name="line1" android:translateX="44.05" android:translateY="38.12">
+        <clip-path
+            android:pathData="M0 0H37.2706V3.38824H0V0Z"
+            />
+        <path
+            android:pathData="M0 0V3.38824H37.2706V0"
+            android:fillColor="#D8D8D8"
+            />
+    </group>
+    <group android:name="line2" android:translateX="44.05" android:translateY="44.89">
+        <clip-path
+            android:pathData="M0 0H29.6471V3.38824H0V0Z"
+            />
+        <path
+            android:pathData="M0 0V3.38824H29.6471V0"
+            android:fillColor="#D8D8D8"
+            />
+    </group>
+    <group android:name="vector" android:translateX="42.04" android:translateY="54.51">
+        <path android:fillColor="#00000000"
+            android:pathData="M4.483,6.166C6.119,5.213 8.676,2.572 9.75,1.371L8.888,5.135C11.682,5.075 16.474,4.785 13.294,4.104C9.319,3.253 -6.771,5.236 6.053,2.948"
+            android:strokeColor="#BEBEBE" android:strokeLineCap="round"
+            android:strokeLineJoin="round" android:strokeWidth="1.35529"/>
+    </group>
+</vector>
+
